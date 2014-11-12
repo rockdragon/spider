@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "superagent": "*",
+    "superagent-proxy" : "*",
     "cheerio": "*",
     "winston": "*",
     "rimraf": "*",
