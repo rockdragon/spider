@@ -6,16 +6,12 @@
     "start": "node ./bin/start.js"
   },
   "dependencies": {
-    "superagent": "*",
-    "superagent-proxy": "*",
     "cheerio": "*",
     "winston": "*",
     "rimraf": "*",
     "underscore": "*",
     "iconv-lite": "*",
-    "needle": "*",
     "bufferhelper" : "*",
-    "chardet": "*",
     "request": "*"
   }
 }
