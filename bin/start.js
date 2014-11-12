@@ -2,10 +2,26 @@
     var crawl = require('../modules/crawler/crawler').crawl;
     var run = require('../modules/es6/container.js').run;
 
+    var cheerio = require('cheerio');
+    var iconv = require('iconv-lite');
+
+    iconv.extendNodeEncodings();
+
     run(function *(cb) {
         var url = 'http://bj.58.com/chuzu/';
         console.log('staring crawl..', url);
         var res = yield crawl('get', url)(cb);
-        console.log(res.text);
+
+        var $ = cheerio.load(res.text, {
+            normalizeWhitespace: true,
+            xmlMode: true
+        });
+        var items = [];
+        $('table.tbimg tr').each(function (idx, element) {
+            var $elements = $(this).children();
+            var $h1 = $($elements[1]).find('h1');
+            items.push($h1.text().trim());
+        });
+        console.log(items);
     });
 })();

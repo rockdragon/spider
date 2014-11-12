@@ -7,10 +7,11 @@
   },
   "dependencies": {
     "superagent": "*",
-    "superagent-proxy" : "*",
+    "superagent-proxy": "*",
     "cheerio": "*",
     "winston": "*",
     "rimraf": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "iconv-lite": "*"
   }
 }

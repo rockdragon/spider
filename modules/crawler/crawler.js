@@ -1,5 +1,4 @@
 var superagent = require('superagent');
-var cheerio = require('cheerio');
 
 var config = require('../config/configUtils');
 var proxy = config.getConfigs().proxy;
