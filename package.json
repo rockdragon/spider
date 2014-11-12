@@ -12,6 +12,9 @@
     "winston": "*",
     "rimraf": "*",
     "underscore": "*",
-    "iconv-lite": "*"
+    "iconv-lite": "*",
+    "needle": "*",
+    "bufferhelper" : "*",
+    "chardet": "*"
   }
 }

@@ -13,3 +13,7 @@ module.exports.crawl = function(method, url){
         req.end(fn);
     };
 };
+
+module.exports.crawlGBK = function(method, url){
+
+};
