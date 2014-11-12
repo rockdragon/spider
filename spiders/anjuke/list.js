@@ -9,7 +9,7 @@
         console.log('staring crawl..', url);
         var res = yield crawl('get', url)(cb);
 
-        var $ = cheerio.load(res.text, {
+        var $ = cheerio.load(res, {
             normalizeWhitespace: true,
             xmlMode: true
         });

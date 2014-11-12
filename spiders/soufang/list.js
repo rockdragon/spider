@@ -1,5 +1,5 @@
 (function () {
-    var crawl = require('../../modules/crawler/crawler').crawlGB2312;
+    var crawl = require('../../modules/crawler/crawler').crawl;
     var run = require('../../modules/es6/container.js').run;
 
     var cheerio = require('cheerio');
