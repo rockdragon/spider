@@ -9,8 +9,6 @@
         console.log('staring crawl..', url);
         var res = yield crawl('get', url)(cb);
 
-        console.log(res);
-
         var $ = cheerio.load(res, {
             normalizeWhitespace: true,
             xmlMode: true
