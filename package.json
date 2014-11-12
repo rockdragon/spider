@@ -15,6 +15,7 @@
     "iconv-lite": "*",
     "needle": "*",
     "bufferhelper" : "*",
-    "chardet": "*"
+    "chardet": "*",
+    "request": "*"
   }
 }
