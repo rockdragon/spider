@@ -14,3 +14,12 @@ module.exports.crawl = function (method, url) {
         req(url, opts, fn);
     };
 };
+
+module.exports.download = function (url, referer, path) {
+    return function (fn) {
+        var opts = {gzip: true};
+        if (proxy)
+            opts.proxy = proxy;
+        request.download(url, referer, opts, path, fn);
+    };
+};
