@@ -4,8 +4,6 @@
 
     var cheerio = require('cheerio');
 
-    var iconv = require('iconv-lite');
-
     run(function *(cb) {
         var url = 'http://zu.fang.com/default.aspx';
         console.log('staring crawl..', url);

@@ -3,15 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/start.js"
+    "start": "node --harmony ./bin/start.js"
   },
   "dependencies": {
     "cheerio": "*",
     "winston": "*",
     "rimraf": "*",
     "underscore": "*",
-    "iconv-lite": "*",
-    "bufferhelper" : "*",
-    "request": "*"
+    "request-gb": "*"
   }
 }
