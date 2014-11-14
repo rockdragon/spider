@@ -19,8 +19,8 @@ Formation of the configuration
 ```
 Folders structure
 ======
-spier
 ```
+spider
 	--bin		:			startup
 	--modules	:			custom modules
 	--spiders	:			business logic
