@@ -1,11 +1,10 @@
 var path = require('path');
 var fs = require('fs');
 var rimraf = require('rimraf');
-var utility = require('../other/utility');
-
+var _ = require('underscore');
 /*
  recursive create directory
-    @dirPath: absolute path
+ @dirPath: absolute path
  */
 module.exports.mkdirAbsoluteSync = function (dirPath, mode) {
     var delimiter = path.sep;
@@ -13,7 +12,7 @@ module.exports.mkdirAbsoluteSync = function (dirPath, mode) {
     var currentPath = '';
     var pathParts = dirPath.split(delimiter);
     for (var i = 0; i < pathParts.length; i++) {
-        currentPath += (utility.isWin() && pathParts[i].contains(':') ? '' : delimiter) + pathParts[i];
+        currentPath += (process.platform === 'win32' && pathParts[i].contains(':') ? '' : delimiter) + pathParts[i];
         if (!fs.existsSync(currentPath)) {
             fs.mkdirSync(currentPath, mode || 0755);
         }
@@ -24,15 +23,15 @@ module.exports.mkdirAbsoluteSync = function (dirPath, mode) {
  recursive delete path entirely
  @dirPath: absolute path
  */
-module.exports.deleteTreeSync = function(dirPath){
-    if(fs.existsSync(dirPath)) {
+module.exports.deleteTreeSync = function (dirPath) {
+    if (fs.existsSync(dirPath)) {
         rimraf.sync(dirPath);
     }
 };
 
-module.exports.renameSync = function(dirPath, newName){
+module.exports.renameSync = function (dirPath, newName) {
     console.log(dirPath, newName);
-    if(fs.existsSync(dirPath)){
+    if (fs.existsSync(dirPath)) {
         var dir = path.dirname(dirPath);
         var newPath = path.join(dir, newName);
         fs.renameSync(dirPath, newPath);
@@ -41,14 +40,29 @@ module.exports.renameSync = function(dirPath, newName){
 };
 
 /*
-    concatenate part with slash /
-* */
-function join(){
+ concatenate part with slash /
+ * */
+function join() {
     var args = Array.prototype.slice.call(arguments);
     args = args || [];
-    if(args.length > 1){
-        return  args.join('/').replace(/[\/]{2,}/g, '/');
+    if (args.length > 1) {
+        return args.join('/').replace(/[\/]{2,}/g, '/');
     }
     return '';
 }
 module.exports.join = join;
+
+/*
+ get all sub-directories in absolute form
+ */
+function getSubDirectories(dir) {
+    var res = [];
+    var files = fs.readdirSync(dir);
+    _.each(files, function (f) {
+        var filePath = path.join(dir, f);
+        if(fs.statSync(filePath).isDirectory())
+            res.push(filePath);
+    });
+    return res;
+}
+module.exports.getSubDirectories = getSubDirectories;
