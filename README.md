@@ -3,8 +3,8 @@ spider
 
 a node spider
 
-#### Formation of the configuration
-
+Formation of the configuration
+======
 ```JSON
 {
     "session_key": "session_id",
@@ -17,8 +17,14 @@ a node spider
     "proxy" : "192.168.1.1:3128"
 }
 ```
+Folders structure
+======
+spier
+	--bin		:			startup
+	--modules	:			custom modules
+	--spiders	:			business logic
 
-#### License
-
+License
+======
 The MIT License (MIT)
 
