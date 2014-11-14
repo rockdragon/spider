@@ -20,9 +20,11 @@ Formation of the configuration
 Folders structure
 ======
 spier
+```
 	--bin		:			startup
 	--modules	:			custom modules
 	--spiders	:			business logic
+```
 
 License
 ======
