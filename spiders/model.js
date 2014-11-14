@@ -1,5 +1,9 @@
+module.exports.house = house;
+module.exports.listPage = listPage;
 /*
+ 房模型
  @opt:{
+ province       '北京'
  city           '北京'
  district       '朝阳'
  bizDistrict    '望京'
@@ -13,9 +17,14 @@
  phone          '15801429451' or 'http://bj.ganji.com/tel_img/?c=UdxKaqrVYooZg055sS0ramfjr968g__PtQyV'
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
+ publisher      '个人'
+ thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
+ pics           ['', '', ...]
  }
  */
 function house(opt) {
+    opt = opt || {};
+    if (opt.province)this.province = opt.province;
     if (opt.city)this.city = opt.city;
     if (opt.district)this.district = opt.district;
     if (opt.bizDistrict)this.bizDistrict = opt.bizDistrict;
@@ -29,4 +38,22 @@ function house(opt) {
     if (opt.phone)this.phone = opt.phone;
     if (opt.title)this.title = opt.title;
     if (opt.price)this.price = opt.price;
+    if (opt.publisher)this.publisher = opt.publisher;
+    if (opt.thumbnail)this.thumbnail = opt.thumbnail;
+    if (opt.pics)this.pics = opt.pics;
+}
+
+/*
+ 列表模块
+ @opt{
+ url:       http://zu.fang.com/house/list/
+ houses:    [house, house, ...]
+ pages:     ['http://zu.fang.com/house/list/i32/', 'http://zu.fang.com/house/list/i33/', ...]
+ }
+ */
+function listPage(opt) {
+    opt = opt || {};
+    if (opt.url)this.url = opt.url;
+    if (opt.houses)this.houses = opt.houses;
+    if (opt.pages)this.pages = opt.pages;
 }

@@ -2,7 +2,7 @@ var crawlPage = require('../biz').carwlPage;
 //var run = require('../../modules/es6/container.js').run;
 
 var cheerio = require('cheerio');
-var url = 'http://zu.fang.com/default.aspx';
+var url = 'http://zu.fang.com/house/list/';
 
 module.exports.getHouses = getHouses;
 function getHouses() {

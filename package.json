@@ -10,6 +10,7 @@
     "winston": "*",
     "rimraf": "*",
     "underscore": "*",
+    "underscore.string": "*",
     "request-gb": "*"
   }
 }
