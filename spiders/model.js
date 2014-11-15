@@ -20,6 +20,8 @@ module.exports.listPage = listPage;
  publisher      '个人'
  thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
  pics           ['', '', ...]
+ publishDate    '2014/11/15'
+ updateDate     '2014/11/15'
  }
  */
 function house(opt) {
@@ -41,6 +43,8 @@ function house(opt) {
     if (opt.publisher)this.publisher = opt.publisher;
     if (opt.thumbnail)this.thumbnail = opt.thumbnail;
     if (opt.pics)this.pics = opt.pics;
+    if (opt.publishDate)this.publishDate = opt.publishDate;
+    if (opt.updateDate)this.updateDate = opt.updateDate;
 }
 
 /*
