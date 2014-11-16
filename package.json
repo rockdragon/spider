@@ -11,6 +11,7 @@
     "rimraf": "*",
     "underscore": "*",
     "underscore.string": "*",
-    "request-gb": "*"
+    "request-gb": "*",
+    "jasmine": "*"
   }
 }
