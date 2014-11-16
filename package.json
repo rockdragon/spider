@@ -12,6 +12,6 @@
     "underscore": "*",
     "underscore.string": "*",
     "request-gb": "*",
-    "jasmine": "*"
+    "jasmine": "*" 
   }
 }
