@@ -1,6 +1,6 @@
 var crawlPage = require('../biz').carwlPage;
 var model = require('../model');
-var run = require('../../modules/es6/container').run;
+//var run = require('../../modules/es6/container').run;
 var cheerio = require('cheerio');
 var _ = require('underscore');
 var _s = require('underscore.string');
@@ -51,7 +51,7 @@ function parse(fn) {
     };
 }
 
-run(function*(cb) {
-    var houses = yield getHouses()(cb);
-    console.log(houses);
-});
+//run(function*(cb) {
+//    var houses = yield getHouses()(cb);
+//    console.log(houses);
+//});
