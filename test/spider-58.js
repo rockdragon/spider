@@ -7,6 +7,7 @@ describe('58 testing', function () {
             var listPage = yield list.getHouses()(cb);
             expect(listPage).not.toBeNull();
             expect(listPage.houses).not.toBeNull();
+            expect(listPage.houses).toEqual(jasmine.any(Array));
             expect(listPage.houses.length).toBeGreaterThan(10);
             done();
         });
