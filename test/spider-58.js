@@ -5,8 +5,8 @@ describe('58 testing', function () {
     it('list testing', function (done) {
         run(function*(cb) {
             var listPage = yield list.getHouses()(cb);
-            expect(listPage).not.toBe(null);
-            expect(listPage.houses).not.toBe(null);
+            expect(listPage).not.toBeNull();
+            expect(listPage.houses).not.toBeNull();
             expect(listPage.houses.length).toBeGreaterThan(10);
             done();
         });
