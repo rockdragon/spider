@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node --harmony ./bin/start.js",
     "test": "mocha --recursive -R spec --require should --harmony test/ --bail",
-    "test-cov": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./test --report lcovonly -- -u exports --require should  --recursive test/ --bail",
-    "test-travis": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/jasmine-node/bin/jasmine-node --report lcovonly -- -u exports --require should  --recursive test/ --bail"
+    "test-cov": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- -u exports --require should  --recursive test/ --bail",
+    "test-travis": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -u exports --require should  --recursive test/ --bail"
   },
   "dependencies": {
     "cheerio": "*",
