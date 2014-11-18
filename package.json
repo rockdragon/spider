@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --harmony ./bin/start.js"
+    "start": "node --harmony ./bin/start.js",
+    "test": "node --harmony ./node_modules/jasmine-node/lib/jasmine-node/cli.js test"
   },
   "dependencies": {
     "cheerio": "*",
@@ -12,6 +13,6 @@
     "underscore": "*",
     "underscore.string": "*",
     "request-gb": "*",
-    "jasmine": "*"
+    "jasmine-node": "*"
   }
 }

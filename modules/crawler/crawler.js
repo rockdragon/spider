@@ -1,16 +1,15 @@
 /*
  crawl chinese page by Encoding:gb2312 & utf-8
  */
-var config = require('../config/configUtils');
-var proxy = config.getConfigs().proxy;
+var config = require('../config/configUtils').getConfigs();
 var request = require('request-gb');
 
 module.exports.crawl = function (method, url) {
     return function (fn) {
         var req = method === 'get' ? request.get : request.post;
         var opts = {gzip: true};
-        if (proxy)
-            opts.proxy = proxy;
+        if (config && config.proxy)
+            opts.proxy = config.proxy;
         req(url, opts, fn);
     };
 };
@@ -18,8 +17,8 @@ module.exports.crawl = function (method, url) {
 module.exports.download = function (url, referer, path) {
     return function (fn) {
         var opts = {gzip: true};
-        if (proxy)
-            opts.proxy = proxy;
+        if (config && config.proxy)
+            opts.proxy = config.proxy;
         request.download(url, referer, opts, path, fn);
     };
 };
