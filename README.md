@@ -1,6 +1,6 @@
 spider
 ======
-![https://travis-ci.org/rockdragon/spider](https://travis-ci.org/rockdragon/spider.svg) [![Coverage Status](https://img.shields.io/coveralls/rockdragon/spider.svg)](https://coveralls.io/r/rockdragon/spider)
+[![Build Status](https://travis-ci.org/rockdragon/spider.svg)](https://travis-ci.org/rockdragon/spider) [![Coverage Status](https://img.shields.io/coveralls/rockdragon/spider.svg)](https://coveralls.io/r/rockdragon/spider)
 
 a node spider
 
