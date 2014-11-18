@@ -1,5 +1,6 @@
 spider
 ======
+![https://travis-ci.org/rockdragon/spider](https://travis-ci.org/rockdragon/spider.svg)
 
 a node spider
 
