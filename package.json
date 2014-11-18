@@ -16,8 +16,10 @@
     "underscore.string": "*",
     "request-gb": "*",
     "istanbul-harmony": "*",
+    "coveralls": "*",
     "should": "*",
     "mocha": "*",
-    "expect.js": "*"
+    "expect.js": "*",
+    "mocha-lcov-reporter": "*"
   }
 }
