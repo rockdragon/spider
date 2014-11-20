@@ -1,6 +1,6 @@
 {
   "name": "spider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node --harmony ./bin/start.js",
@@ -20,6 +20,10 @@
     "should": "*",
     "mocha": "*",
     "expect.js": "*",
-    "mocha-lcov-reporter": "*"
+    "mocha-lcov-reporter": "*",
+    "co": "^4.0"
+  },
+  "engines": {
+    "node": ">=0.11.14"
   }
 }
