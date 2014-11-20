@@ -4,9 +4,9 @@
     var child_process = require('child_process');
     var _ = require('underscore');
     var pathUtils = require('../modules/other/pathUtils');
-    var run = require('../modules/es6/container.js').run;
+    var co = require('co');
 
-    run(function*(cb) {
+    co(function*() {
         var dirs = pathUtils.getSubDirectories(process.cwd());
         for (var i = 0, len = dirs.length; i < len; i++) {
             var d = dirs[i];
@@ -15,7 +15,7 @@
             //child_process.fork(listJS);
             console.log('require ', listJS, '...');
             var getHouses = require(listJS).getHouses;
-            var houses = yield getHouses()(cb);
+            var houses = yield getHouses();
             console.log(d, houses);
         }
     });
