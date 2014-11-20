@@ -1,5 +1,4 @@
 var list = require('../spiders/58/list');
-var run = require('../modules/es6/container').run;
 var co = require('co');
 var expect = require('expect.js');
 require('should');
