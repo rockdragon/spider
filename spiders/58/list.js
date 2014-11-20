@@ -24,9 +24,10 @@ function parse(fn) {
         });
         //collect page info
         var locations = $('meta[name="location"]').attr('content');
-        var province = locations.match('province=([^;]+)')[1];
-        var city = locations.match('city=([^;]+)')[1];
-
+        if(locations) {
+            var province = locations.match('province=([^;]+)')[1];
+            var city = locations.match('city=([^;]+)')[1];
+        }
         var listPage = new model.listPage({url: url, houses: [], pages: []});
         _.each($('div.pager a'), function(a){
             var pageUrl = resolve(url, $(a).attr('href'));
