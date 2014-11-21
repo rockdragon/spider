@@ -1,4 +1,4 @@
-var testReturn = require('./testCoPromise');
+var testCoPromise = require('./testCoPromise');
 
 testCoPromise.read('config.cfg')
     .then(function (res) {
