@@ -1,11 +1,10 @@
-require('should');
 var copyUtils = require('../modules/other/copyUtils');
 var deepCopy = copyUtils.deepCopy,
-    isFunction = copyUtils.isFunction;
+    isFunction = copyUtils.isFunction,
+    isRegExp = copyUtils.isRegExp;
 var toValue = function(obj){
-    return isFunction(obj) ? obj.toString() : JSON.stringify(obj);
+    return isFunction(obj) || isRegExp(obj) ? obj.toString() : JSON.stringify(obj);
 };
-
 describe('deep copy of the Complex Object', function () {
     var foo = function () {
         this.c = 3;
