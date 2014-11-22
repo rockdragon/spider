@@ -1,43 +1,51 @@
-var getObjectType = function (obj) {
+module.exports.isObject = isObject;
+module.exports.isObject = isObject;
+module.exports.isString = isString;
+module.exports.isNumber = isNumber;
+module.exports.isFunction = isFunction;
+module.exports.deepCopy = deepCopy;
+
+function getObjectType(obj) {
     return Object.prototype.toString.call(obj);
-};
-var isObject = function (obj) {
+}
+function isObject(obj) {
     return getObjectType(obj) === '[object Object]';
-};
-var isDate = function(obj){
+}
+function isDate(obj) {
     return getObjectType(obj) === '[object Date]';
-};
-var isString = function (obj) {
+}
+function isString(obj) {
     return getObjectType(obj) === '[object String]';
-};
-var isArray = function (obj) {
+}
+function isArray(obj) {
     return getObjectType(obj) === '[object Array]';
-};
-var isNumber = function (obj) {
+}
+function isNumber(obj) {
     return getObjectType(obj) === '[object Number]';
-};
-var isFunction = function (obj) {
+}
+function isFunction(obj) {
     return getObjectType(obj) === '[object Function]';
-};
+}
 function deepCopy(obj) {
     var cloneObj = null;
     if (isArray(obj))
         cloneObj = [];
-    else if(isObject(obj))
+    else if (isObject(obj))
         cloneObj = {};
-    else if(isDate(obj))
+    else if (isDate(obj))
         cloneObj = new Date(obj.toJSON());
     else
         cloneObj = obj;
     for (var key in obj) {
-        var child = obj[key];
-        if (isObject(child) || isArray(child))
-            cloneObj[key] = deepCopy(child);
-        else if (isNumber(child) ||
-            isString(child) ||
-            isFunction(child))
-            cloneObj[key] = child;
+        if(obj.hasOwnProperty(key)) {
+            var child = obj[key];
+            if (isObject(child) || isArray(child))
+                cloneObj[key] = deepCopy(child);
+            else if (isNumber(child) ||
+                isString(child) ||
+                isFunction(child))
+                cloneObj[key] = child;
+        }
     }
     return cloneObj;
 }
-module.exports.deepCopy = deepCopy;
