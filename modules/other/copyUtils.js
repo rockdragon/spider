@@ -20,8 +20,10 @@ function deepCopy(obj) {
     var cloneObj = null;
     if (isArray(obj))
         cloneObj = [];
-    else
+    else if(isObject(obj))
         cloneObj = Object.create(null);
+    else
+        cloneObj = obj;
     for (var key in obj) {
         var child = obj[key];
         if (isObject(child) || isArray(child))
@@ -29,7 +31,7 @@ function deepCopy(obj) {
         else if (isNumber(child) ||
             isString(child) ||
             isFunction(child))
-            cloneObj[key] = child;
+            cloneObj[key] = Object.getOwnPropertyDescriptor(obj, key).value;
     }
     return cloneObj;
 }
