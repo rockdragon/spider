@@ -57,6 +57,13 @@ describe('deep copy of the Simple Object', function () {
         };
         toValue(cloned2).should.not.equal(toValue(h));
     });
+
+    it('equality of the RegExp', function(){
+        var h = new RegExp(/\w\+/gi);
+        var cloned2 = deepCopy(h);
+        cloned2 = new RegExp(/\d\+/gi);
+        toValue(cloned2).should.not.equal(toValue(h));
+    });
 });
 
 describe('deep copy of the Primitive Type', function () {
