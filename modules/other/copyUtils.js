@@ -4,6 +4,9 @@ var getObjectType = function (obj) {
 var isObject = function (obj) {
     return getObjectType(obj) === '[object Object]';
 };
+var isDate = function(obj){
+    return getObjectType(obj) === '[object Date]';
+};
 var isString = function (obj) {
     return getObjectType(obj) === '[object String]';
 };
@@ -21,7 +24,9 @@ function deepCopy(obj) {
     if (isArray(obj))
         cloneObj = [];
     else if(isObject(obj))
-        cloneObj = Object.create(null);
+        cloneObj = {};
+    else if(isDate(obj))
+        cloneObj = new Date(obj.toJSON());
     else
         cloneObj = obj;
     for (var key in obj) {
@@ -31,7 +36,7 @@ function deepCopy(obj) {
         else if (isNumber(child) ||
             isString(child) ||
             isFunction(child))
-            cloneObj[key] = Object.getOwnPropertyDescriptor(obj, key).value;
+            cloneObj[key] = child;
     }
     return cloneObj;
 }
