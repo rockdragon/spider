@@ -1,4 +1,4 @@
-var copyUtils = require('../modules/other/copyUtils');
+var copyUtils = require('node-deepcopy');
 var deepCopy = copyUtils.deepCopy,
     isFunction = copyUtils.isFunction,
     isRegExp = copyUtils.isRegExp;
