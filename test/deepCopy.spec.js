@@ -1,3 +1,4 @@
+require('should');
 var copyUtils = require('node-deepcopy');
 var deepCopy = copyUtils.deepCopy,
     isFunction = copyUtils.isFunction,

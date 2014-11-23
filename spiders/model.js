@@ -3,6 +3,7 @@ module.exports.listPage = listPage;
 /*
  房模型
  @opt:{
+ id             '5820038458323847x' or 'fang3/1268317789x'
  province       '北京'
  city           '北京'
  district       '朝阳'
