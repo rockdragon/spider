@@ -27,6 +27,7 @@ module.exports.listPage = listPage;
  */
 function house(opt) {
     opt = opt || {};
+    if (opt.id)this.id = opt.id;
     if (opt.province)this.province = opt.province;
     if (opt.city)this.city = opt.city;
     if (opt.district)this.district = opt.district;
