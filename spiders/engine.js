@@ -8,10 +8,13 @@
 
     var dirs = pathUtils.getSubDirectories(process.cwd());
     var modules = [];
+
     var cb = function (action) {
         var co = require('co');
+        var loggerPath = '../logger/logUtils';
+        var logger =require(loggerPath);
         return co(function *() {
-            console.log(yield action());
+            logger.log(yield action());
         });
     };
     for (var i = 0, len = dirs.length; i < len; i++) {
