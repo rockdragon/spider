@@ -1,4 +1,4 @@
-var crawlPage = require('../biz').carwlPage;
+var crawlPage = require('../biz').crawlPage;
 //var run = require('../../modules/es6/container.js').run;
 
 var cheerio = require('cheerio');

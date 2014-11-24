@@ -4,20 +4,21 @@
     var child_process = require('child_process');
     var _ = require('underscore');
     var pathUtils = require('../modules/other/pathUtils');
-    var co = require('co');
+    var Parent = require('../modules/scheduler/Parent');
 
-    co(function*() {
-        var dirs = pathUtils.getSubDirectories(process.cwd());
-        for (var i = 0, len = dirs.length; i < len; i++) {
-            var d = dirs[i];
-            var listJS = path.join(d, 'list');
-            //console.log('fork ', listJS, '...');
-            //child_process.fork(listJS);
-            console.log('require ', listJS, '...');
-            var getHouses = require(listJS).getHouses;
-            var houses = yield getHouses();
-            console.log(d, houses);
-        }
-    });
+    var dirs = pathUtils.getSubDirectories(process.cwd());
+    var modules = [];
+    var cb = function (action) {
+        var co = require('co');
+        return co(function *() {
+            console.log(yield action());
+        });
+    };
+    for (var i = 0, len = dirs.length; i < len; i++) {
+        var d = dirs[i];
+        var listJS = path.join(d, 'list');
+        modules.push({file: listJS, method: 'getHouses', callback: cb});
+    }
 
+    new Parent(modules, '../modules/scheduler/child').start();
 })();
