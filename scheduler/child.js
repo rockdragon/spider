@@ -1,6 +1,6 @@
 var interval = 1000;
 var livingSeconds = 5;
-var stoppedTime = new Date(new Date().getTime() + livingSeconds * 1000);
+var stoppedTime = null;
 
 function heartbeat() {
     var msg = 'child-process is working';
@@ -8,13 +8,18 @@ function heartbeat() {
     if (new Date() < stoppedTime)
         beatLoop();
     else
-        process.send({category: 'stop'});
+        stop();
 }
 function beatLoop() {
     setTimeout(heartbeat, interval);
 }
 
+function stop(){
+    process.send({category: 'stop'});
+}
+
 function work() {
+    stoppedTime =  new Date(new Date().getTime() + livingSeconds * 1000);
     beatLoop();
 }
 
