@@ -12,15 +12,20 @@
     var cb = function (action) {
         var co = require('co');
         return co(function *() {
-            console.log(yield action());
-            console.log('killing [%d]', process.pid);
-            process.kill(process.pid); // kill self
+            var logUtils = '../logger/logUtils';
+            require(logUtils).log(yield action());
+            var pid = process.pid;
+            setTimeout(function(){
+                console.log('killing [%d]', pid);
+                process.kill(pid); // kill self
+            }, 1000);
         });
     };
     for (var i = 0, len = dirs.length; i < len; i++) {
         var d = dirs[i];
         var listJS = path.join(d, 'list');
-        modules.push({file: listJS, method: 'getHouses', callback: cb.toString()});
+        if(fs.existsSync(listJS + '.js'))
+            modules.push({file: listJS, method: 'getHouses', callback: cb.toString()});
     }
 
     new Parent(modules, '../modules/scheduler/child').start();

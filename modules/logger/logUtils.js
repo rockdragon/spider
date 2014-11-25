@@ -2,8 +2,7 @@ var winston = require('winston');
 var path = require('path');
 var fs = require('fs');
 var pathUtils = require('../other/pathUtils');
-var logPath = path.join(process.cwd(), 'logs/'),
-    logFile = path.join(logPath, 'access.log');
+var logPath = path.join(process.cwd(), 'logs/');
 
 if(!fs.existsSync(logPath)){
     pathUtils.mkdirAbsoluteSync(logPath);
@@ -12,11 +11,11 @@ if(!fs.existsSync(logPath)){
 var logger = new (winston.Logger)({
     transports:[
         new (winston.transports.Console)(),
-        new (winston.transports.File)({
-            filename: logFile,
-            timestamp: 'true',
-            maxsize: 10485760,
-            maxFiles: 10
+        new (winston.transports.DailyRotateFile)({
+            name: 'file',
+            datePattern: '.yyyy-MM-dd',
+            json: false,
+            filename: path.join(logPath, 'log')
         })
     ]
 });
