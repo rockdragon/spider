@@ -38,7 +38,7 @@ Parent.prototype.stop = function (child) {
 
 Parent.prototype.execute = function (task) {
     if (task) {
-        var child = child_process.fork(this.child , [task.file, task.method, task.callback]);
+        var child = child_process.fork(this.child);
         this.taskWorking.push(child);
         child.on('message', function (m) {
             if (m.category === 'heartbeat')
@@ -47,6 +47,7 @@ Parent.prototype.execute = function (task) {
                 console.log(m.message);
             }
         });
+        child.send({category:'init', task:task});
     }
 };
 

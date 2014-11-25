@@ -9,18 +9,17 @@
     var dirs = pathUtils.getSubDirectories(process.cwd());
     var modules = [];
 
-    var cb = function (action) {
+    var cb = function (action, pid) {
         var co = require('co');
-        var loggerPath = '../logger/logUtils';
-        var logger =require(loggerPath);
         return co(function *() {
-            logger.log(yield action());
+            console.log(yield action());
+            process.kill(pid);
         });
     };
     for (var i = 0, len = dirs.length; i < len; i++) {
         var d = dirs[i];
         var listJS = path.join(d, 'list');
-        modules.push({file: listJS, method: 'getHouses', callback: cb});
+        modules.push({file: listJS, method: 'getHouses', callback: cb.toString()});
     }
 
     new Parent(modules, '../modules/scheduler/child').start();

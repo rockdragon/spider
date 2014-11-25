@@ -30,13 +30,20 @@ Child.prototype.work = function () {
     //beatLoop(this);
     var module = require(this.jsFile);
     var action = module[this.method];
-    this.callback(action);
+    this.callback(action, process.pid);
 };
 
-if (process.argv.length > 3) {
-    var jsFile = process.argv[2];
-    var method = process.argv[3];
-    var callback = process.argv[4];
-    var child = new Child(jsFile, method, callback);
-    child.work();
-}
+//if (process.argv.length > 3) {
+//    var jsFile = process.argv[2];
+//    var method = process.argv[3];
+//    var callback = process.argv[4];
+//    var child = new Child(jsFile, method, callback);
+//    child.work();
+//}
+
+process.on('message', function(m){
+    if(m.category ==='init'){
+        var child = new Child(m.task.file, m.task.method, m.task.callback);
+        child.work();
+    }
+});
