@@ -9,11 +9,12 @@
     var dirs = pathUtils.getSubDirectories(process.cwd());
     var modules = [];
 
-    var cb = function (action, pid) {
+    var cb = function (action) {
         var co = require('co');
         return co(function *() {
             console.log(yield action());
-            process.kill(pid);
+            console.log('killing [%d]', process.pid);
+            process.kill(process.pid); // kill self
         });
     };
     for (var i = 0, len = dirs.length; i < len; i++) {
