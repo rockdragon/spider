@@ -23,6 +23,7 @@ module.exports.listPage = listPage;
  pics           ['', '', ...]
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  category       '[整租]' '[单间]'
+ convenience    '距10号线芍药居站约392米'
  publishDate    '2014/11/15'
  updateDate     '2014/11/15'
  }
@@ -49,6 +50,7 @@ function house(opt) {
     if (opt.pics)this.pics = opt.pics;
     if (opt.href)this.href = opt.href;
     if (opt.category)this.category = opt.category;
+    if (opt.convenience)this.convenience = opt.convenience;
     if (opt.publishDate)this.publishDate = opt.publishDate;
     if (opt.updateDate)this.updateDate = opt.updateDate;
 }

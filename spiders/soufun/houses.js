@@ -38,11 +38,13 @@ function parse(fn) {
             var city = locations.match('city=([^;]+)')[1];
         }
         var listPage = new model.listPage({url: url, houses: [], pages: []});
-        _.each($('div.fanye a'), function(a){
-            var pageHref = $(a).attr('href');
-            if(pageHref) {
-                var pageUrl = resolve(url, pageHref);
-                listPage.pages.push(pageUrl);
+        $('div.fanye a').each(function(idx, ele){
+            if(idx > 0) {
+                var pageHref = $(ele).attr('href');
+                if (pageHref) {
+                    var pageUrl = resolve(url, pageHref);
+                    listPage.pages.push(pageUrl);
+                }
             }
         });
         $('div.houseList dl.list').each(function () {
@@ -55,6 +57,26 @@ function parse(fn) {
             var $href = $($elements[1]).find('p.title a');
             house.title = $href.text();
             house.href = $href.attr('href');
+            var $publisher = $($elements[1]).find('span.txt');
+            if($publisher && _s.contains($($publisher).text(), '个人'))
+                house.publisher = '个人';
+            var $infos = $($elements[1]).find('p.gray6');
+            if($infos.length > 2) {
+                var $address = $($infos[0]).find('a span');
+                house.district = $($address[0]).text();
+                house.bizDistrict = $($address[1]).text();
+                house.building = $($address[2]).text();
+                house.address = $($infos[0]).find('span.iconAdress').text();
+                var $infoDetails = $($infos[1]).text().split('/');
+                house.houseType = $infoDetails[0];
+                house.area = $infoDetails[1];
+                house.fitment = $infoDetails[2];
+                house.floor = $infoDetails[3];
+                house.orientation = $infoDetails[4];
+                house.convenience = $($infos[2]).text();
+            }
+
+            house.price = $($elements[1]).find('div.moreInfo span.price').text();
 
             listPage.houses.push(house);
         });
