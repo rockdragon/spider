@@ -11,21 +11,18 @@ var getRootURL = require('../../modules/other/pathUtils').getRootURL;
  热门商圈
  * */
 module.exports = HotZone;
-function HotZone(url){
-    this.cityUrl = getRootURL(url);
+function HotZone(url) {
     this.url = url;
 }
 
 HotZone.prototype.getHotZones = function () {
-    var boundParse = parse.bind(this);
-    return crawlPage(this.url, boundParse);
+    return crawlPage(this.url, parse);
 };
 
 /*
  * parse houses
  * */
 function parse(fn) {
-    var cityUrl = this.cityUrl;
     return function (err, res) {
         var $ = cheerio.load(res, {
             normalizeWhitespace: true,
@@ -33,20 +30,21 @@ function parse(fn) {
         });
         //collect page info
         var listBizDistricts = [];
-        var hotArea =  $('dl#hotarea')[0];
-        if(hotArea) {
-            _.each($(hotArea).find('dd a'), function(a){
-                var href = resolve(cityUrl, $(a).attr('href'));
-                var name = $(a).text();
-                listBizDistricts.push({ name:name, href:href });
+        $('div#relative_plate_list ul').each(function (idx, ele) {
+            $(ele).find('a').each(function (idx2, ele2) {
+                if(idx2 > 0) {
+                    var href = $(ele2).attr('href');
+                    var name = $(ele2).text();
+                    listBizDistricts.push({name: name, href: href});
+                }
             });
-        }
+        });
         fn(err, listBizDistricts);
     };
 }
 
 //co(function*() {
-//    var zone = new HotZone('http://bj.58.com/chuzu/');
+//    var zone = new HotZone('http://bj.zu.anjuke.com/');
 //    var hotZones = yield zone.getHotZones();
 //    console.log(hotZones);
 //});

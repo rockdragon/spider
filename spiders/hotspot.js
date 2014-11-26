@@ -1,8 +1,8 @@
 /*
  出租热点城市
  * */
-var hotspots = {
-    'hot_58': [
+var hotSpots = {
+    '58': [
         'http://bj.58.com/chuzu/',
         'http://sh.58.com/chuzu/',
         'http://gz.58.com/chuzu/',
@@ -14,7 +14,7 @@ var hotspots = {
         'http://wh.58.com/chuzu/',
         'http://cq.58.com/chuzu/'
     ],
-    'hot_ganji':[
+    'ganji':[
         'http://bj.ganji.com/',
         'http://sh.ganji.com/',
         'http://gz.ganji.com/',
@@ -24,7 +24,7 @@ var hotspots = {
         'http://tj.ganji.com/',
         'http://hz.ganji.com/'
     ],
-    'hot_soufun':[
+    'soufun':[
         'http://zu1.fang.com/',
         'http://zu.sh.fang.com/',
         'http://zu.gz.fang.com/',
@@ -41,7 +41,7 @@ var hotspots = {
         'http://zu.xian.fang.com/',
         'http://zu.cs.fang.com/'
     ],
-    'hot_anjuke':[
+    'anjuke':[
         'http://beijing.anjuke.com/',
         'http://shanghai.anjuke.com/',
         'http://guangzhou.anjuke.com/',

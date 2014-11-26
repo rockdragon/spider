@@ -66,3 +66,10 @@ function getSubDirectories(dir) {
     return res;
 }
 module.exports.getSubDirectories = getSubDirectories;
+
+function getRootURL(url){
+    var reg = new RegExp('http(s)?:\/\/[^\/]+/');
+    var m = reg.exec(url);
+    return m ? m[0] : null;
+}
+module.exports.getRootURL = getRootURL;

@@ -5,6 +5,7 @@ var cheerio = require('cheerio');
 var _ = require('underscore');
 var _s = require('underscore.string');
 var resolve = require('url').resolve;
+var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 
 /*
  列表
