@@ -84,8 +84,8 @@ function parse(fn) {
     }
 }
 
-co(function*() {
-    var h = new Houses('http://zu.fang.com/house/list/');
-    var houses = yield h.getHouses();
-    console.log(houses);
-});
+//co(function*() {
+//    var h = new Houses('http://zu.fang.com/house/list/');
+//    var houses = yield h.getHouses();
+//    console.log(houses);
+//});

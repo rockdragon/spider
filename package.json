@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node --harmony ./bin/start.js",
-    "test": "mocha --recursive --timeout 25000 -R spec --require should --harmony test/ --bail",
-    "test-cov": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- -u exports --require should  --timeout 25000 --recursive test/ --bail",
-    "test-travis": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -u exports --require should  --timeout 25000  --recursive test/ --bail"
+    "test": "mocha --recursive --timeout 50000 -R spec --require should --harmony test/ --bail",
+    "test-cov": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- -u exports --require should  --timeout 50000 --recursive test/ --bail",
+    "test-travis": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -u exports --require should  --timeout 50000  --recursive test/ --bail"
   },
   "dependencies": {
     "cheerio": "*",
