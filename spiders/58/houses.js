@@ -9,7 +9,7 @@ var resolve = require('url').resolve;
 /*
  列表
  * */
-module.exports.Houses = Houses;
+module.exports = Houses;
 function Houses(url){
     this.url = url;
 }
@@ -61,7 +61,7 @@ function parse(fn) {
         });
         fn(err, listPage);
     };
-};
+}
 
 //co(function*() {
 //    var h = new Houses('http://bj.58.com/chuzu/');
