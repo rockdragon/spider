@@ -63,8 +63,8 @@ function parse(fn) {
     };
 };
 
-co(function*() {
-    var h = new Houses('http://bj.58.com/chuzu/');
-    var houses = yield h.getHouses();
-    console.log(houses);
-});
+//co(function*() {
+//    var h = new Houses('http://bj.58.com/chuzu/');
+//    var houses = yield h.getHouses();
+//    console.log(houses);
+//});
