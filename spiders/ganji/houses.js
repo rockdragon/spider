@@ -7,8 +7,6 @@ var _s = require('underscore.string');
 var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 
-var cheerio = require('cheerio');
-
 /*
  热门商圈
  * */
@@ -85,8 +83,8 @@ function parse(fn) {
     };
 }
 
-co(function*(cb) {
-    var h = new Houses('http://bj.ganji.com/fang1/');
-    var houses = yield h.getHouses();
-    console.log(houses);
-});
+//co(function*() {
+//    var h = new Houses('http://bj.ganji.com/fang1/');
+//    var houses = yield h.getHouses();
+//    console.log(houses);
+//});

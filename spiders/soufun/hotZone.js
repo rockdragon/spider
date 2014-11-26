@@ -6,7 +6,6 @@ var _ = require('underscore');
 var _s = require('underscore.string');
 var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
-
 /*
  热门商圈
  * */
@@ -33,17 +32,19 @@ function parse(fn) {
         });
         //collect page info
         var listBizDistricts = [];
-        $('div.letter-tab-con a').each(function (idx, ele) {
-            var href = resolve(url, $(ele).attr('href'));
-            var name = $(ele).text();
-            listBizDistricts.push({name: name, href: href});
+        $('p.qxName a').each(function (idx, ele) {
+            if(idx > 0) {
+                var href = resolve(url, $(ele).attr('href'));
+                var name = $(ele).text();
+                listBizDistricts.push({name: name, href: href});
+            }
         });
         fn(err, listBizDistricts);
     };
 }
 
 //co(function*() {
-//    var zone = new HotZone('http://bj.ganji.com/fang1/');
+//    var zone = new HotZone('http://zu.fang.com/house/list/');
 //    var hotZones = yield zone.getHotZones();
 //    console.log(hotZones);
 //});
