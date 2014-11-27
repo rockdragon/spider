@@ -11,7 +11,7 @@
 
     var cb = function (action) {
         var co = require('co');
-        co(action).then(function(){
+        co(action).then(function(){ // suicidal-ending for the child-process callback
             var pid = process.pid;
             console.log('[%d] had been suicide.', pid);
             process.kill(pid);
