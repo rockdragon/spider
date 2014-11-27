@@ -1,0 +1,54 @@
+/*
+ 出租热点城市
+ * */
+module.exports = {
+    '58': [
+        'http://bj.58.com/chuzu/',
+        'http://sh.58.com/chuzu/',
+        'http://gz.58.com/chuzu/',
+        'http://sz.58.com/chuzu/',
+        'http://cd.58.com/chuzu/',
+        'http://hz.58.com/chuzu/',
+        'http://nj.58.com/chuzu/',
+        'http://tj.58.com/chuzu/',
+        'http://wh.58.com/chuzu/',
+        'http://cq.58.com/chuzu/'
+    ],
+    'ganji':[
+        'http://bj.ganji.com/fang1/',
+        'http://sh.ganji.com/fang1/',
+        'http://gz.ganji.com/fang1/',
+        'http://sz.ganji.com/fang1/',
+        'http://wh.ganji.com/fang1/',
+        'http://nj.ganji.com/fang1/',
+        'http://tj.ganji.com/fang1/',
+        'http://hz.ganji.com/fang1/'
+    ],
+    'soufun':[
+        'http://zu.fang.com/house/list/',
+        'http://zu.sh.fang.com/house/list/',
+        'http://zu.gz.fang.com/house/list/',
+        'http://zu.sz.fang.com/house/list/',
+        'http://zu.tj.fang.com/house/list/',
+        'http://zu.suzhou.fang.com/house/list/',
+        'http://zu.hz.fang.com/house/list/',
+        'http://zu.cd.fang.com/house/list/',
+        'http://zu.cq.fang.com/house/list/',
+        'http://zu.nanjing.fang.com/house/list/',
+        'http://zu.wuhan.fang.com/house/list/',
+        'http://zu.dl.fang.com/house/list/',
+        'http://zu.qd.fang.com/house/list/',
+        'http://zu.xian.fang.com/house/list/',
+        'http://zu.cs.fang.com/house/list/'
+    ],
+    'anjuke':[
+        'http://bj.zu.anjuke.com/',
+        'http://sh.zu.anjuke.com/',
+        'http://gz.zu.anjuke.com/',
+        'http://sz.zu.anjuke.com/',
+        'http://cd.zu.anjuke.com/',
+        'http://nj.zu.anjuke.com/',
+        'http://tj.zu.anjuke.com/',
+        'http://hz.zu.anjuke.com/'
+    ]
+};
