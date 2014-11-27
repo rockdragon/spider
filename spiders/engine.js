@@ -15,6 +15,8 @@
             var pid = process.pid;
             console.log('[%d] had been suicide.', pid);
             process.kill(pid);
+        }, function(err){
+            console.log(err.stack);
         });
     };
     for (var i = 0, len = directories.length; i < len; i++) {
