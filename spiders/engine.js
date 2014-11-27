@@ -6,26 +6,22 @@
     var pathUtils = require('../modules/other/pathUtils');
     var Parent = require('../modules/scheduler/Parent');
 
-    var dirs = pathUtils.getSubDirectories(process.cwd());
+    var directories = pathUtils.getSubDirectories(process.cwd());
     var modules = [];
 
     var cb = function (action) {
         var co = require('co');
-        return co(function *() {
-            var logUtils = '../logger/logUtils';
-            require(logUtils).log(yield action());
+        co(action).then(function(){
             var pid = process.pid;
-            setTimeout(function(){
-                console.log('killing [%d]', pid);
-                process.kill(pid); // kill self
-            }, 1000);
+            console.log('[%d] had been suicide.', pid);
+            process.kill(pid);
         });
     };
-    for (var i = 0, len = dirs.length; i < len; i++) {
-        var d = dirs[i];
-        var listJS = path.join(d, 'list');
-        if(fs.existsSync(listJS + '.js'))
-            modules.push({file: listJS, method: 'getHouses', callback: cb.toString()});
+    for (var i = 0, len = directories.length; i < len; i++) {
+        var d = directories[i];
+        var cityJS = path.join(d, 'city');
+        if(fs.existsSync(cityJS + '.js'))
+            modules.push({file: cityJS, method: 'fetchCities', callback: cb.toString()});
     }
 
     new Parent(modules, '../modules/scheduler/child').start();

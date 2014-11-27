@@ -9,7 +9,8 @@ var Houses = require('./houses');
 var log = require('../biz').log;
 var sleep = require('../biz').sleep;
 
-co(function* () {
+module.exports.fetchCities = fetchCities;
+function* fetchCities () {
     var cities = HotCity['anjuke'];
 
     for (var i = 0, len = cities.length; i < len; i++) {
@@ -34,4 +35,4 @@ co(function* () {
             log(e.stack);
         }
     }
-});
+}
