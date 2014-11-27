@@ -3,7 +3,7 @@ module.exports.listPage = listPage;
 /*
  房模型
  @opt:{
- id             '5820038458323847x' or 'fang3/1268317789x'
+ id             hash('5820038458323847x' or 'fang3/1268317789x')
  province       '北京'
  city           '北京'
  district       '朝阳'
@@ -15,17 +15,17 @@ module.exports.listPage = listPage;
  floor          '15/23层'
  orientation    '朝南北'
  fitment        '精装修'
- phone          '15801429451' or 'http://bj.ganji.com/tel_img/?c=UdxKaqrVYooZg055sS0ramfjr968g__PtQyV'
+ phone          '15801429451'
+ phonePic       'http://bj.ganji.com/tel_img/?c=UdxKaqrVYooZg055sS0ramfjr968g__PtQyV'
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
  publisher      '个人'
  thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
- pics           ['', '', ...]
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  category       '[整租]' '[单间]'
  convenience    '距10号线芍药居站约392米'
+ source         'ganji' '58' 'anjuke' 'soufun'
  publishDate    '2014/11/15'
- updateDate     '2014/11/15'
  }
  */
 function house(opt) {
@@ -47,12 +47,11 @@ function house(opt) {
     if (opt.price)this.price = opt.price;
     if (opt.publisher)this.publisher = opt.publisher;
     if (opt.thumbnail)this.thumbnail = opt.thumbnail;
-    if (opt.pics)this.pics = opt.pics;
     if (opt.href)this.href = opt.href;
     if (opt.category)this.category = opt.category;
     if (opt.convenience)this.convenience = opt.convenience;
+    if (opt.source)this.source = opt.source;
     if (opt.publishDate)this.publishDate = opt.publishDate;
-    if (opt.updateDate)this.updateDate = opt.updateDate;
 }
 
 /*
