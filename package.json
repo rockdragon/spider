@@ -25,7 +25,7 @@
     "node-deepcopy": "*",
     "sequelize" : "*",
     "mysql": "*",
-    "node-ent" : "*"
+    "ent" : "*"
   },
   "engines": {
     "node": ">=0.11.14"
