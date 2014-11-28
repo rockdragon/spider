@@ -7,6 +7,7 @@ var _s = require('underscore.string');
 var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
+var ent = require('ent');
 /*
  详情
  * */
@@ -37,9 +38,9 @@ function parse(fn) {
         var house = {};
         house.title = $('div.bigtitle h1').text().trim();
         var $time = $('li.time');
-        if($time){
+        if ($time) {
             var $timeScript = $time.children();
-            if($timeScript.length > 0){
+            if ($timeScript.length > 0) {
                 house.publishDate = new Date();
             } else {
                 house.publishDate = $time.text().trim();
@@ -48,39 +49,24 @@ function parse(fn) {
         var $price = $('span.bigpri');
         house.price = $price.text().trim();
         house.payment = $price.next().text().trim();
-        var $infos = $('div.su_tit:contains("概况")').next().text().trim().split('&nbsp;&nbsp;');
-        console.log($infos);
-        house.houseType = $infos[0].trim();
-        house.area = $infos[1].trim();
-        house.buildingType = $infos[2].trim();
-        if($infos[3])
-            house.fitment = $infos[3].trim();
-        if($infos[4])
-            house.orientation = $infos[4].trim();
-        house.floor = $('div.su_tit:contains("楼层")').next().text().trim();
-        var $zones = $('div.su_tit:contains("区域")').next().text().replace('找附近工作','').trim().split('-');
-        house.district = $zones[0].trim();
-        house.bizDistrict = $zones[1].trim();
-        house.building = $zones[2].trim();
-        house.address = $('div.su_tit:contains("地址")').next().text().trim();
-        var $contact = $('div.su_tit:contains("联系")').next();
-        house.contact = $contact.find('a').text();
-        house.publisher = $contact.find('em').text();
-        var $phone = $('#t_phone');
-        if($phone) {
-            var $phoneScript = $phone.children();
-            if($phoneScript.length > 0){ // 必须加Referer
-                house.phonePic =  extractImgSrc($($phoneScript[0]).html());
-            } else {
-                house.phone = $phone.text().trim();
-            }
+        house.overview = ent.decode($('div.su_tit:contains("概况")').next().text()).trim();
+        var $zone = $('div.su_tit:contains("区域")').next();
+        if ($zone.children() && $zone.children().length > 0) {
+            var zoneText = ent.decode($zone.text());
+            house.zone = new RegExp(/(\S+\s-\s\S+\s-\s\S+).?/g).exec(zoneText)[1];
+        } else {
+            house.zone = $zone.text() + ' - ' + $zone.next().text() + ' - ' + $zone.next().next().text();
         }
+        var $address = $('div.su_tit:contains("地址")').next();
+        house.address = new RegExp(/([^\s]+)/g).exec($address.text())[1];
         fn(err, house);
     };
 }
 
 co(function*() {
-    var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
+    //var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
+    //var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
+    var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
     var house = yield d.getDetail();
     console.log(house);
 });
