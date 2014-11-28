@@ -1,4 +1,4 @@
-CREATE TABLE `spider`.`house` (
+CREATE TABLE `spider`.`houses` (
   `id` INT NOT NULL,
   `province` VARCHAR(10) NULL,
   `city` VARCHAR(10) NULL,

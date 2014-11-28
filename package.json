@@ -22,7 +22,9 @@
     "expect.js": "*",
     "mocha-lcov-reporter": "*",
     "co": "^4.0",
-    "node-deepcopy": "*"
+    "node-deepcopy": "*",
+    "sequelize" : "*",
+    "mysql": "*"
   },
   "engines": {
     "node": ">=0.11.14"
