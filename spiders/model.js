@@ -11,6 +11,7 @@ module.exports.listPage = listPage;
  building       '丽都水岸'
  address        '东风北桥北，酒仙桥路甲12号'
  houseType      '3室2厅'
+ buildingType   '普通住宅' '公寓' '别墅'
  area           '180㎡'
  floor          '15/23层'
  orientation    '朝南北'
@@ -19,7 +20,9 @@ module.exports.listPage = listPage;
  phonePic       'http://bj.ganji.com/tel_img/?c=UdxKaqrVYooZg055sS0ramfjr968g__PtQyV'
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
+ payment        '押一付三' '季付' '半年付' '年付'
  publisher      '个人'
+ contact        '郑小姐'
  thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  category       '[整租]' '[单间]'
@@ -38,6 +41,7 @@ function house(opt) {
     if (opt.building)this.building = opt.building;
     if (opt.address)this.address = opt.address;
     if (opt.houseType)this.houseType = opt.houseType;
+    if (opt.buildingType)this.buildingType = opt.buildingType;
     if (opt.area)this.area = opt.area;
     if (opt.floor)this.floor = opt.floor;
     if (opt.orientation)this.orientation = opt.orientation;
@@ -45,7 +49,9 @@ function house(opt) {
     if (opt.phone)this.phone = opt.phone;
     if (opt.title)this.title = opt.title;
     if (opt.price)this.price = opt.price;
+    if (opt.payment)this.payment = opt.payment;
     if (opt.publisher)this.publisher = opt.publisher;
+    if (opt.contact)this.contact = opt.contact;
     if (opt.thumbnail)this.thumbnail = opt.thumbnail;
     if (opt.href)this.href = opt.href;
     if (opt.category)this.category = opt.category;
@@ -66,6 +72,7 @@ var House = sequelize.define('house', {
     building    : {type: Sequelize.STRING},
     address     : {type: Sequelize.STRING},
     houseType   : {type: Sequelize.STRING},
+    buildingType: {type: Sequelize.STRING},
     area        : {type: Sequelize.STRING},
     floor       : {type: Sequelize.STRING},
     orientation : {type: Sequelize.STRING},
@@ -74,7 +81,9 @@ var House = sequelize.define('house', {
     phonePic    : {type: Sequelize.BLOB},
     title       : {type: Sequelize.STRING, allowNull: false},
     price       : {type: Sequelize.DECIMAL, allowNull: false},
+    payment     : {type: Sequelize.STRING},
     publisher   : {type: Sequelize.STRING},
+    contact     : {type: Sequelize.STRING},
     thumbnail   : {type: Sequelize.BLOB},
     href        : {type: Sequelize.STRING, allowNull: false},
     category    : {type: Sequelize.STRING},

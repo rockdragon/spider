@@ -17,3 +17,12 @@ module.exports.log = log;
 
 var sleep = require('../modules/other/timeUtils').sleep;
 module.exports.sleep = sleep;
+
+module.exports.extractImgSrc = extractImgSrc;
+function extractImgSrc(html){
+    var regExp = new RegExp('<img src=[\"\']([^\"\']+)[\"\']/>');
+    var matched = regExp.exec(html);
+    if(matched && matched.length > 1)
+        return matched[1];
+    return null;
+}
