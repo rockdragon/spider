@@ -54,6 +54,35 @@ function house(opt) {
     if (opt.publishDate)this.publishDate = opt.publishDate;
 }
 
+var Sequelize = require('sequelize')
+    , sequelize = new Sequelize('mysql://root:system@127.0.0.1:3306/spider');
+
+var House = sequelize.define('house', {
+    id          : {type: Sequelize.STRING, primaryKey: true, unique: true},
+    province    : {type: Sequelize.STRING},
+    city        : {type: Sequelize.STRING},
+    district    : {type: Sequelize.STRING},
+    bizDistrict : {type: Sequelize.STRING},
+    building    : {type: Sequelize.STRING},
+    address     : {type: Sequelize.STRING},
+    houseType   : {type: Sequelize.STRING},
+    area        : {type: Sequelize.STRING},
+    floor       : {type: Sequelize.STRING},
+    orientation : {type: Sequelize.STRING},
+    fitment     : {type: Sequelize.STRING},
+    phone       : {type: Sequelize.STRING},
+    phonePic    : {type: Sequelize.BLOB},
+    title       : {type: Sequelize.STRING, allowNull: false},
+    price       : {type: Sequelize.DECIMAL, allowNull: false},
+    publisher   : {type: Sequelize.STRING},
+    thumbnail   : {type: Sequelize.BLOB},
+    href        : {type: Sequelize.STRING, allowNull: false},
+    category    : {type: Sequelize.STRING},
+    convenience : {type: Sequelize.STRING},
+    source      : {type: Sequelize.STRING},
+    publishDate : {type: Sequelize.DATE, allowNull: false}
+});
+
 /*
  列表模块
  @opt{
@@ -68,3 +97,4 @@ function listPage(opt) {
     if (opt.houses)this.houses = opt.houses;
     if (opt.pages)this.pages = opt.pages;
 }
+
