@@ -10,14 +10,14 @@ var log = require('../biz').log;
 var sleep = require('../biz').sleep;
 
 module.exports.fetchCities = fetchCities;
-function* fetchCities () {
+function* fetchCities (sleepSeconds) {
     var cities = HotCity['anjuke'];
 
     for (var i = 0, len = cities.length; i < len; i++) {
         var city = cities[i];
         try {
             var zones = yield new HotZone(city).getHotZones();
-            sleep(10);
+            sleep(sleepSeconds);
             //name=安贞出租, href=http://bj.58.com/anzhenqiao/chuzu/
             for (var j = 0, len2 = zones.length; j < len2; j++) {
                 var zone = zones[j];
@@ -28,7 +28,7 @@ function* fetchCities () {
 
                 log(util.format('%s --------- END',zone.name));
                 log('\r\n');
-                sleep(10);
+                sleep(sleepSeconds);
             }
         } catch (e) {
             log(util.format('%s: ---------ERROR', city));
