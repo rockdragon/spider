@@ -26,7 +26,8 @@
     "sequelize": "*",
     "mysql": "*",
     "ent": "*",
-    "bravo": "*"
+    "bravo": "*",
+    "moment": "*"
   },
   "engines": {
     "node": ">=0.11.14"

@@ -4,7 +4,15 @@
     "g": 1
   },
   "publishDate": {
-    "expr": "<li[^c]+class=\"time\">\\s+([^<]+)",
+    "expr": "<li[^c]+class=\"time\">\\s+((\\d{4}-\\d{2}-\\d{2})|<script>([^<]+))",
     "g": 1
+  },
+  "overview": {
+    "expr": "<div class=\"su_tit\">概况</div>\\s+<div class=\"su_con\">([^<]+)",
+    "g": 1,
+    "replace": {
+      "a": "[^\\S]+",
+      "b": ""
+    }
   }
 }

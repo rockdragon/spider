@@ -10,6 +10,7 @@ var extractImgSrc = require('../biz').extractImgSrc;
 var ent = require('ent');
 var bravo = require('bravo');
 var path = require('path');
+var moment = require('moment');
 
 /*
  详情
@@ -41,6 +42,12 @@ function parse(fn) {
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, res);
+
+        if(_s.contains(house.publishDate, '<script>'))
+            house.publishDate = new Date();
+        else
+            house.publishDate = moment(house.publishDate).toDate();
+        house.overview = ent.decode(house.overview);
 
         //var $time = $('li.time');
         //if ($time) {
