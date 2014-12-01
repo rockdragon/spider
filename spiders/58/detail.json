@@ -2,5 +2,9 @@
   "title": {
     "expr": "<h1[^>]*>([^<]+)",
     "g": 1
+  },
+  "publishDate": {
+    "expr": "<li[^c]+class=\"time\">\\s+([^<]+)",
+    "g": 1
   }
 }
