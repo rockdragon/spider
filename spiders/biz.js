@@ -20,9 +20,14 @@ module.exports.sleep = sleep;
 
 module.exports.extractImgSrc = extractImgSrc;
 function extractImgSrc(html){
-    var regExp = new RegExp('<img src=[\"\']([^\"\']+)[\"\']/>');
+    var regExp = new RegExp('<img src=["\']([^"\']+)["\']');
     var matched = regExp.exec(html);
     if(matched && matched.length > 1)
         return matched[1];
     return null;
+}
+
+module.exports.getURL = getURL;
+function getURL(url){
+    return crawl('get', url);
 }

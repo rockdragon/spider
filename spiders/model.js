@@ -15,13 +15,14 @@ module.exports.listPage = listPage;
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
  payment        '押一付三' '季付' '半年付' '年付'
- publisher      '个人'
+ publisher      '个人' '中介'
  contact        '郑小姐'
  thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  source         'ganji' '58' 'anjuke' 'soufun'
  publishDate    '2014/11/15'
  description    '...'
+ cityid         '1'
  }
  */
 function house(opt) {
