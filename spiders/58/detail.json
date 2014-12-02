@@ -59,15 +59,23 @@
     "expr": "locallist:\\[{dispid:'([^']+)'",
     "g": 1
   },
-  "infoid":{
+  "infoid": {
     "expr": "}\\],infoid:'([^']+)'",
     "g": 1
   },
-  "phone":{
+  "phone": {
     "expr": "<span id=\"t_phone\"[^>]+>([\\s\\S]*?)</span>",
     "g": 1,
     "replace": {
       "a": "[^\\S]+",
+      "b": " "
+    }
+  },
+  "description": {
+    "expr": "description_con \"[^>]*>([\\s\\S]*?)</div>",
+    "g": 1,
+    "replace": {
+      "a": "[^\\S]+|&nbsp;|<p[^>]+>联系我时，请说是在58同城上看到的，谢谢！</p>",
       "b": " "
     }
   }
