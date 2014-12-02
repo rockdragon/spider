@@ -48,6 +48,7 @@ function parse(fn) {
         else
             house.publishDate = moment(house.publishDate).toDate();
         house.overview = ent.decode(house.overview);
+        house.zone = house.zone.trim();
 
         //var $time = $('li.time');
         //if ($time) {
@@ -76,9 +77,9 @@ function parse(fn) {
 }
 
 co(function*() {
-    //var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
+    var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
     //var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
-    var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
+    //var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
     var house = yield d.getDetail();
     console.log(house);
 });

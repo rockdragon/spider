@@ -14,5 +14,21 @@
       "a": "[^\\S]+",
       "b": ""
     }
+  },
+  "province": {
+    "expr": "content=\"province=([^;]+)",
+    "g": 1
+  },
+  "city": {
+    "expr": "content=\"[^;]+;city=([^;]+)",
+    "g": 1
+  },
+  "zone": {
+    "expr": "区域</div>([\\s\\S]*?)<span",
+    "g": 1,
+    "replace": {
+      "a": "<div[^>]+>|<a[^>]+>|</a>|&nbsp;|\\r|\\n|\\t",
+      "b": ""
+    }
   }
 }

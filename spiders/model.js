@@ -4,6 +4,8 @@ module.exports.listPage = listPage;
  房模型
  @opt:{
  id             hash('5820038458323847x' or 'fang3/1268317789x')
+ province       '北京'
+ city           '北京'
  zone           '北京 - 昌平 - 沙河镇'
  address        '东风北桥北，酒仙桥路甲12号'
  overview       '1室1厅2卫 76㎡ 商住两用 精装修 朝向西 2层/3层'
@@ -25,6 +27,8 @@ module.exports.listPage = listPage;
 function house(opt) {
     opt = opt || {};
     if (opt.id)this.id = opt.id;
+    if (opt.province)this.province = opt.province;
+    if (opt.city)this.city = opt.city;
     if (opt.zone)this.zone = opt.zone;
     if (opt.address)this.address = opt.address;
     if (opt.overview)this.overview = opt.overview;
@@ -47,6 +51,8 @@ var Sequelize = require('sequelize')
 
 var House = sequelize.define('house', {
     id          : {type: Sequelize.STRING, primaryKey: true, unique: true},
+    province    : {type: Sequelize.STRING},
+    city        : {type: Sequelize.STRING},
     zone        : {type: Sequelize.STRING},
     address     : {type: Sequelize.STRING},
     overview    : {type: Sequelize.STRING},
