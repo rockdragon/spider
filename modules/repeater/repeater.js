@@ -5,7 +5,7 @@ var cache = {};
 
 function instance(){
     if(!cache[key]) {
-        console.log('bloom non exist.')
+        //console.log('bloom does not exist.');
         var p = 0.0001;                               //误判率
         var n = 1000000;                              //集合大小
         var m = parseInt(2 * n * Math.log(1 / p));    //位数组大小
