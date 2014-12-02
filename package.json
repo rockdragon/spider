@@ -14,7 +14,6 @@
     "rimraf": "*",
     "underscore": "*",
     "underscore.string": "*",
-    "request-gb": "~0.0.9",
     "istanbul-harmony": "*",
     "coveralls": "*",
     "should": "*",
@@ -26,8 +25,10 @@
     "sequelize": "*",
     "mysql": "*",
     "ent": "*",
-    "bravo": "*",
-    "moment": "*"
+    "moment": "*",
+    "bloomfilter": "*",
+    "request-gb": "~0.0.9",
+    "bravo": "~0.1.3"
   },
   "engines": {
     "node": ">=0.11.14"

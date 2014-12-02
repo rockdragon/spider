@@ -7,7 +7,6 @@ var crawl = require('../modules/crawler/crawler').crawl;
 module.exports.crawlPage = crawlPage;
 function crawlPage(url, parse) {
     return function (fn) {
-        console.log('staring crawl..', url);
         crawl('get', url)(parse(fn));
     };
 }

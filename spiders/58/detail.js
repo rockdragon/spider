@@ -45,6 +45,7 @@ function parse(fn) {
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, html);
+        house.source = '58';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
 
         if (_s.contains(house.publishDate, '<script>')) {
