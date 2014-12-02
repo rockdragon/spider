@@ -44,6 +44,7 @@ function parse(fn) {
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, res);
+        house.href = url;
 
         if (_s.contains(house.publishDate, '<script>')) {
             house.publishDate = new Date();
@@ -70,9 +71,9 @@ function parse(fn) {
 }
 
 co(function*() {
-    //var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
+    var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
     //var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
-    var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
+    //var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
     var house = yield d.getDetail();
     if (house.phoneURL) {
         var phoneJSON = yield getURL(house.phoneURL);
