@@ -49,6 +49,8 @@ function parse(fn) {
             house.publishDate = moment(house.publishDate).toDate();
         house.overview = ent.decode(house.overview);
         house.zone = house.zone.trim();
+        if(!house.furniture)
+            house.furniture = '床,衣柜,沙发,电视,冰箱,洗衣机,空调,热水器,宽带,暖气';
 
         //var $time = $('li.time');
         //if ($time) {
