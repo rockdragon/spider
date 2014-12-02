@@ -26,8 +26,8 @@ HotZone.prototype.getHotZones = function () {
  * */
 function parse(fn) {
     var cityUrl = this.cityUrl;
-    return function (err, res) {
-        var $ = cheerio.load(res, {
+    return function (err, res, html) {
+        var $ = cheerio.load(html, {
             normalizeWhitespace: true,
             xmlMode: true
         });

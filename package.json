@@ -14,7 +14,7 @@
     "rimraf": "*",
     "underscore": "*",
     "underscore.string": "*",
-    "request-gb": "~0.0.8",
+    "request-gb": "~0.0.9",
     "istanbul-harmony": "*",
     "coveralls": "*",
     "should": "*",

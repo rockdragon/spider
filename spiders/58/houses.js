@@ -27,37 +27,22 @@ Houses.prototype.getHouses = function() {
  * */
 function parse(fn) {
     var url = this.url;
-    return function (err, res) {
-        var $ = cheerio.load(res, {
+    return function (err, res, html) {
+        var $ = cheerio.load(html, {
             normalizeWhitespace: true,
             xmlMode: true
         });
         //collect page info
-        var locations = $('meta[name="location"]').attr('content');
-        if(locations) {
-            var province = locations.match('province=([^;]+)')[1];
-            var city = locations.match('city=([^;]+)')[1];
-        }
         var listPage = new model.listPage({url: url, houses: [], pages: []});
         _.each($('div.pager a'), function(a){
             var pageUrl = resolve(url, $(a).attr('href'));
             listPage.pages.push(pageUrl);
         });
         $('table.tbimg tr').each(function () {
-            var house = new model.house({province: province, city: city});
+            var house = new model.house();
             var $elements = $(this).children();
-            house.thumbnail = $($elements[0]).find('div a img').attr('src');
             var href = $($elements[1]).find('h1 a');
-            house.title = $(href).text().trim();
             house.href = $(href).attr('href');
-            house.price = $($elements[2]).find('b.pri').text().trim();
-            house.houseType = $($elements[2]).find('span.showroom').text().trim();
-            if(_s.include(house.title, '(个人)'))
-                house.publisher = '个人';
-            var addrs = $($elements[1]).find('p.qj-renaddr a');
-            house.bizDistrict = $(addrs[0]).text();
-            house.building = $(addrs[1]).text();
-
             listPage.houses.push(house);
         });
         fn(err, listPage);
@@ -65,7 +50,7 @@ function parse(fn) {
 }
 
 //co(function*() {
-//    var h = new Houses('http://bj.58.com/chuzu/');
+//    var h = new Houses('http://bj.58.com/chaoyang/zufang/0/');
 //    var houses = yield h.getHouses();
 //    console.log(houses);
 //});

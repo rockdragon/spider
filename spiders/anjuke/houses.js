@@ -25,8 +25,8 @@ Houses.prototype.getHouses = function() {
 
 function parse(fn) {
     var url = this.url;
-    return function (err, res) {
-        var $ = cheerio.load(res, {
+    return function (err, res, html) {
+        var $ = cheerio.load(html, {
             normalizeWhitespace: true,
             xmlMode: true
         });

@@ -27,6 +27,14 @@ function extractImgSrc(html){
     return null;
 }
 
+module.exports.extractRequestHref = extractRequestHref;
+function extractRequestHref(href, path){
+    if(href && path){
+        return href.replace(path, '');
+    }
+    return href;
+}
+
 module.exports.getURL = getURL;
 function getURL(url){
     return crawl('get', url);
