@@ -59,7 +59,7 @@
     "expr": "locallist:\\[{dispid:'([^']+)'",
     "g": 1
   },
-  "infoid": {
+  "id": {
     "expr": "}\\],infoid:'([^']+)'",
     "g": 1
   },
