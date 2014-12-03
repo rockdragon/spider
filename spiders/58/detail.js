@@ -37,10 +37,10 @@ Detail.prototype.getDetail = function () {
 function parse(fn) {
     var url = this.url;
     return function (err, res, html) {
-        var $ = cheerio.load(html, {
-            normalizeWhitespace: true,
-            xmlMode: true
-        });
+        //var $ = cheerio.load(html, {
+        //    normalizeWhitespace: true,
+        //    xmlMode: true
+        //});
 
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
