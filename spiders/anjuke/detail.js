@@ -47,7 +47,7 @@ function parse(fn) {
         var house = bravo.Parse(jsonFile, html);
         house.source = 'anjuke';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
-        house.publishDate = moment(_s.trim(house.publishDate,'-')).toDate();
+        house.publishDate = moment(house.publishDate).toDate();
 
         fn(err, house);
     };
