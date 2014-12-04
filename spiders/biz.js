@@ -1,4 +1,5 @@
 var crawl = require('../modules/crawler/crawler').crawl;
+var download2Buffer = require('../modules/crawler/crawler').download2Buffer;
 /*
 *   crawl page common logic
 *   @url
@@ -10,6 +11,8 @@ function crawlPage(url, parse) {
         crawl('get', url)(parse(fn));
     };
 }
+
+module.exports.download2Buffer = download2Buffer;
 
 var log = require('../modules/logger/logUtils').log;
 module.exports.log = log;

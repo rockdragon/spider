@@ -8,6 +8,7 @@ var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
+var download2Buffer = require('../biz').download2Buffer;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -79,7 +80,8 @@ co(function*() {
     var house = yield d.getDetail();
     if (house.phoneURL) {
         var phoneJSON = yield getURL(house.phoneURL);
-        house.phonePic = extractImgSrc(phoneJSON);
+        house.phoneURL = extractImgSrc(phoneJSON);
+        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
         delete house.phoneURL;
     }
     console.log(house);

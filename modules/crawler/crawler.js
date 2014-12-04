@@ -22,3 +22,12 @@ module.exports.download = function (url, referer, path) {
         request.download(url, referer, opts, path, fn);
     };
 };
+
+module.exports.download2Buffer = function (url, referer) {
+    return function (fn) {
+        var opts = {gzip: true};
+        if (config && config.proxy)
+            opts.proxy = config.proxy;
+        request.download2Buffer(url, referer, opts, fn);
+    };
+};
