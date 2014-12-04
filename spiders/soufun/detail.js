@@ -53,9 +53,18 @@ function parse(fn) {
 }
 
 co(function*() {
-    var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
-    //var d = new Detail('http://zu.fang.com/chuzu/1_58826173_-1.htm');
-    //var d = new Detail('http://zu.nanjing.fang.com/chuzu/1_50852557_-1.htm');
+    //var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
+    //var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
+    var d = new Detail('http://zu.fang.com/chuzu/1_58826425_-1.htm');
     var house = yield d.getDetail();
+    if (house.mapUrl) {//没有经纬度的不收录
+        var content = yield getURL(house.mapUrl);
+        var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
+        if(matched){
+            house.longitude =  matched[1];
+            house.latitude = matched[2];
+        }
+        delete house.mapUrl;
+    }
     console.log(house);
 });

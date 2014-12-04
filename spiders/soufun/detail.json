@@ -2,5 +2,9 @@
   "title": {
     "expr": "id=\"talkTitle\" value=\"([^\"]+)",
     "g": 1
+  },
+  "mapUrl": {
+    "expr": "src=\"(http://zu.fang.com/map/NewMapDetail.aspx[^\"]+)",
+    "g": 1
   }
 }

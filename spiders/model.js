@@ -56,6 +56,11 @@ function house(opt) {
 var Sequelize = require('sequelize')
     , sequelize = new Sequelize('mysql://root:system@127.0.0.1:3306/spider');
 
+/*
+ Data Model
+
+            * 没有经纬度的不收录
+ */
 var House = sequelize.define('house', {
     id          : {type: Sequelize.STRING, primaryKey: true, unique: true},
     province    : {type: Sequelize.STRING},
