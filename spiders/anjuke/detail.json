@@ -15,5 +15,13 @@
         "b": ""
       }
     ]
+  },
+  "longitude":{
+    "expr": "from=prop_view_popup#l1=[^&]+&l2=([^&]+)",
+    "g": 1
+  },
+  "latitude":{
+    "expr": "from=prop_view_popup#l1=([^&]+)&l2=[^&]+",
+    "g": 1
   }
 }

@@ -45,19 +45,17 @@ function parse(fn) {
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, html);
-        house.source = 'anjuke';
+        house.source = 'ganji';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
-        house.publishDate = moment(house.publishDate).toDate();
 
         fn(err, house);
     };
 }
 
 co(function*() {
-    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
-    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
+    var d = new Detail('http://bj.ganji.com/fang1/1276725667x.htm');
+    //var d = new Detail('http://bj.ganji.com/fang3/1248504994x.htm');
+    //var d = new Detail('http://cd.ganji.com/fang1/1267272567x.htm');
     var house = yield d.getDetail();
     console.log(house);
 });

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "expr": "<h1 class=\"title-name\">([^<]+)",
+    "g": 1
+  },
+  "longitude":{
+    "expr": "coord=([^,]+),[^;]+",
+    "g": 1
+  },
+  "latitude":{
+    "expr": "coord=[^,]+,([^;]+)",
+    "g": 1
+  }
+}

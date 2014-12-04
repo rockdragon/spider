@@ -22,6 +22,8 @@ module.exports.listPage = listPage;
  source         'ganji' '58' 'anjuke' 'soufun'
  publishDate    '2014/11/15'
  description    '...'
+ longitude      '116.465118408203'   经度
+ latitude       '39.9008178710938'   纬度
  cityid         '1'
  }
  */
@@ -45,6 +47,10 @@ function house(opt) {
     if (opt.href)this.href = opt.href;
     if (opt.source)this.source = opt.source;
     if (opt.publishDate)this.publishDate = opt.publishDate;
+    if (opt.description)this.description = opt.description;
+    if (opt.longitude)this.longitude = opt.longitude;
+    if (opt.latitude)this.latitude = opt.latitude;
+    if (opt.cityid)this.cityid = opt.cityid;
 }
 
 var Sequelize = require('sequelize')
@@ -68,7 +74,11 @@ var House = sequelize.define('house', {
     thumbnail   : {type: Sequelize.BLOB},
     href        : {type: Sequelize.STRING, allowNull: false},
     source      : {type: Sequelize.STRING},
-    publishDate : {type: Sequelize.DATE, allowNull: false}
+    publishDate : {type: Sequelize.DATE, allowNull: false},
+    description : {type: Sequelize.STRING},
+    longitude   : {type: Sequelize.DECIMAL},
+    latitude    : {type: Sequelize.DECIMAL},
+    cityid      : {type: Sequelize.INTEGER}
 });
 
 /*

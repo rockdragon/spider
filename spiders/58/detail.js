@@ -74,9 +74,9 @@ function parse(fn) {
 
 co(function*() {
     var d = new Detail('http://jing.58.com/adJump?adType=3&target=pZwY0jCfsvFJsWN3shPfUiqlIyu6Uh0fnWTQPWT3PH0LnHndPj73sMPCIAd_sjT8nHnznHTdrHDQn1c3nHTYP1bYnjbOrjE1nHnLnj9OPHE3nzkQrjnvn1mYrik_FhQfuvIGU-qd0vRzgv-b5HThuA-107qWmgw-5H9huA-107q_UvP6UjYQnHEzFhP_pyR8I7qd0vRzgv-b5iu-UMwGIZ-GujYznjDvnj9dP10Qn1NYniud0vRzpyEqnW01njb1nHDhpyd-pHYhuyOYpgwOIZ-kuHYkFhR8IA-YXRqWmgw-5iu-UMwGIZ-xUAqWmykqFhwG0LKxIA-VuHYQPjDLPHDznWT3PjcdFMKf0v-Ypyq85HEOFhP_pyPopyEqujIBnhFhuHnVPHcOuBYYujn1syD3nW0VP1nYPhcvnvNYPvEvFMK60h7V5iukUA7YuhqzUHYVnE&end=end');
-    //var d = new Detail('http://cd.58.com/zufang/20059098777351x.shtml');
     //var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
     //var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
+    //var d = new Detail('http://bj.58.com/zufang/20160520080258x.shtml');
     var house = yield d.getDetail();
     if (house.phoneURL) {
         var phoneJSON = yield getURL(house.phoneURL);

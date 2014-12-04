@@ -86,5 +86,13 @@
   "payment": {
     "expr": "<span class=\"f12 c_999\">([^<]+)</span>",
     "g": 1
+  },
+  "longitude":{
+    "expr": "baidulon:'([^']+)'",
+    "g": 1
+  },
+  "latitude":{
+    "expr": "baidulat:'([^']+)'",
+    "g": 1
   }
 }
