@@ -34,7 +34,7 @@ module.exports = {
         'http://zu.hz.fang.com/house/a21/',
         'http://zu.cd.fang.com/house/list/a21/',
         'http://zu.cq.fang.com/house/list/a21/',
-        'http://zu.nanjing.fang.com/house/a21/',
+        'http://zu.nanjing.fang.com/house/list/a21/',
         'http://zu.wuhan.fang.com/house/list/a21/',
         'http://zu.dl.fang.com/house/a21/',
         'http://zu.qd.fang.com/house/a21/',
