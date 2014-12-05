@@ -48,7 +48,7 @@ function parse(fn) {
             }
         });
         $('div.houseList dl.list').each(function () {
-            var house = new model.house({province: province, city: city});
+            var house = new model.House({province: province, city: city});
 
             var $elements = $(this).children();
 

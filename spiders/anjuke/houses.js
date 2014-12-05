@@ -38,7 +38,7 @@ function parse(fn) {
             listPage.pages.push(pageUrl);
         });
         $('div.main_content dl.dl_list_house').each(function () {
-            var house = new model.house({city: city});
+            var house = new model.House({city: city});
             var $elements = $(this).children();
 
             house.thumbnail = $($elements[0]).find('a img').attr('src');

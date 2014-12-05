@@ -39,7 +39,7 @@ function parse(fn) {
             listPage.pages.push(pageUrl);
         });
         $('table.tbimg tr').each(function () {
-            var house = new model.house();
+            var house = new model.House();
             var $elements = $(this).children();
             var href = $($elements[1]).find('h1 a');
             house.href = $(href).attr('href');

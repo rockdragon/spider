@@ -1,10 +1,9 @@
-var crawl = require('../modules/crawler/crawler').crawl;
-var download2Buffer = require('../modules/crawler/crawler').download2Buffer;
 /*
 *   crawl page common logic
 *   @url
 *   @parse: a function which parse page, it uses fn to callback
 */
+var crawl = require('../modules/crawler/crawler').crawl;
 module.exports.crawlPage = crawlPage;
 function crawlPage(url, parse) {
     return function (fn) {
@@ -12,14 +11,32 @@ function crawlPage(url, parse) {
     };
 }
 
-module.exports.download2Buffer = download2Buffer;
+/*
+ * getURL
+ * */
+module.exports.getURL = getURL;
+function getURL(url){
+    return crawl('get', url);
+}
 
-var log = require('../modules/logger/logUtils').log;
-module.exports.log = log;
+/*
+ download file into buffer
+* */
+module.exports.download2Buffer = require('../modules/crawler/crawler').download2Buffer;
 
-var sleep = require('../modules/other/timeUtils').sleep;
-module.exports.sleep = sleep;
+/*
+* Logger
+* */
+module.exports.log = require('../modules/logger/logUtils').log;
 
+/*
+* Sleep
+* */
+module.exports.sleep = require('../modules/other/timeUtils').sleep;
+
+/*
+* Extract Img Src
+* */
 module.exports.extractImgSrc = extractImgSrc;
 function extractImgSrc(html){
     var regExp = new RegExp('<img src=["\']([^"\']+)["\']');
@@ -29,6 +46,9 @@ function extractImgSrc(html){
     return null;
 }
 
+/*
+* Extract Link Href
+* */
 module.exports.extractRequestHref = extractRequestHref;
 function extractRequestHref(href, path){
     if(href && path){
@@ -37,7 +57,11 @@ function extractRequestHref(href, path){
     return href;
 }
 
-module.exports.getURL = getURL;
-function getURL(url){
-    return crawl('get', url);
+var cryptoUtils = require('../modules/other/cryptoUtils');
+var model = require('./model');
+var delimiter = '-';
+function addHouseDetail(detail){
+    var house = new model.House(detail);
+    house.id = cryptoUtils.encrypt(house.source  + delimiter + house.id);
+    //TODO: convert house to HouseModel
 }

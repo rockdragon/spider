@@ -1,9 +1,11 @@
-module.exports.house = house;
+module.exports.House = House;
 module.exports.listPage = listPage;
+module.exports.HouseModel = HouseModel;
+
 /*
  房模型
  @opt:{
- id             hash('5820038458323847x' or 'fang3/1268317789x')
+ id             hash(source + '_' +  '35997962' or '20160857713541' or '53050553')
  province       '北京'
  city           '北京'
  zone           '北京 - 昌平 - 沙河镇'
@@ -27,7 +29,7 @@ module.exports.listPage = listPage;
  cityid         '1'
  }
  */
-function house(opt) {
+function House(opt) {
     opt = opt || {};
     if (opt.id)this.id = opt.id;
     if (opt.province)this.province = opt.province;
@@ -53,15 +55,29 @@ function house(opt) {
     if (opt.cityid)this.cityid = opt.cityid;
 }
 
+/*
+ 列表模块
+ @opt{
+ url:       http://zu.fang.com/house/list/
+ houses:    [house, house, ...]
+ pages:     ['http://zu.fang.com/house/list/i32/', 'http://zu.fang.com/house/list/i33/', ...]
+ }
+ */
+function listPage(opt) {
+    opt = opt || {};
+    if (opt.url)this.url = opt.url;
+    if (opt.houses)this.houses = opt.houses;
+    if (opt.pages)this.pages = opt.pages;
+}
+
 var Sequelize = require('sequelize')
     , sequelize = new Sequelize('mysql://root:system@127.0.0.1:3306/spider');
-
 /*
  Data Model
 
             * 没有经纬度的不收录
  */
-var House = sequelize.define('house', {
+var HouseModel = sequelize.define('house', {
     id          : {type: Sequelize.STRING, primaryKey: true, unique: true},
     province    : {type: Sequelize.STRING},
     city        : {type: Sequelize.STRING},
@@ -85,19 +101,4 @@ var House = sequelize.define('house', {
     latitude    : {type: Sequelize.DECIMAL},
     cityid      : {type: Sequelize.INTEGER}
 });
-
-/*
- 列表模块
- @opt{
- url:       http://zu.fang.com/house/list/
- houses:    [house, house, ...]
- pages:     ['http://zu.fang.com/house/list/i32/', 'http://zu.fang.com/house/list/i33/', ...]
- }
- */
-function listPage(opt) {
-    opt = opt || {};
-    if (opt.url)this.url = opt.url;
-    if (opt.houses)this.houses = opt.houses;
-    if (opt.pages)this.pages = opt.pages;
-}
 

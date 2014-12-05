@@ -1,4 +1,8 @@
 {
+  "id": {
+    "expr": "var sharehouseid = '([^']+)'",
+    "g": 1
+  },
   "title": {
     "expr": "id=\"talkTitle\" value=\"([^\"]+)",
     "g": 1
