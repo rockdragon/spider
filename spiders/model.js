@@ -11,13 +11,13 @@ module.exports.listPage = listPage;
  overview       '1室1厅2卫 76㎡ 商住两用 精装修 朝向西 2层/3层'
  furniture      '床 / 家具 / 煤气 / 暖气 / 宽带 / 电视 / 冰箱 / 洗衣机 / 热水器'
  phone          '15801429451'
- phonePic       'http://bj.ganji.com/tel_img/?c=UdxKaqrVYooZg055sS0ramfjr968g__PtQyV'
+ phonePic       图片<BLOB>
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
  payment        '押一付三' '季付' '半年付' '年付'
  publisher      '个人' '中介'
  contact        '郑小姐'
- thumbnail      'http://pic4.58cdn.com.cn/p1/tiny/n_s02512217763172548164.jpg'
+ thumbnail      图片<BLOB>
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  source         'ganji' '58' 'anjuke' 'soufun'
  publishDate    '2014/11/15'

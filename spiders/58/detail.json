@@ -94,5 +94,9 @@
   "latitude":{
     "expr": "baidulat:'([^']+)'",
     "g": 1
+  },
+  "galleryURL":{
+    "expr": "<img id=\"img1\" src=['\"]([^'\"]+)'",
+    "g": 1
   }
 }

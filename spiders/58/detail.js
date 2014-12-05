@@ -84,5 +84,9 @@ co(function*() {
         house.phonePic = yield download2Buffer(house.phoneURL, house.href);
         delete house.phoneURL;
     }
+    if(house.galleryURL){
+        house.thumbnail = yield download2Buffer(house.galleryURL, house.href);
+        delete house.galleryURL;
+    }
     console.log(house);
 });
