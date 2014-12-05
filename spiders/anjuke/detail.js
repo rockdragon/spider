@@ -57,9 +57,9 @@ function parse(fn) {
 }
 
 co(function*() {
-    var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
+    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
+    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
     //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
     if(house.thumbnail){
