@@ -31,7 +31,7 @@
     "moment": "*",
     "bloomfilter": "*",
     "request-gb": "~0.1.2",
-    "bravo": "~0.1.4"
+    "bravo": "~0.1.5"
   },
   "engines": {
     "node": ">=0.11.14"

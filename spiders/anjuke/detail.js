@@ -45,6 +45,7 @@ function parse(fn) {
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, html);
+        house.zone = house.city + ' - ' + house.zone;
         house.source = 'anjuke';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
         house.publishDate = moment(house.publishDate).toDate();
@@ -56,8 +57,8 @@ function parse(fn) {
 co(function*() {
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
+    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
+    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
     console.log(house);
 });
