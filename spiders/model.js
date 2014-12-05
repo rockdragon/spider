@@ -14,7 +14,7 @@ module.exports.listPage = listPage;
  phonePic       图片<BLOB>
  title          '【21世纪官方推荐】3室2厅125平 出租,南北通透-整租'
  price          '15000元/月'
- payment        '押一付三' '季付' '半年付' '年付'
+ payment        '押一付三' '季付' '半年付' '年付' '面议'
  publisher      '个人' '中介'
  contact        '郑小姐'
  thumbnail      图片<BLOB>

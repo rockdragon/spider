@@ -65,5 +65,90 @@
         "b": " - "
       }
     ]
+  },
+  "overview": {
+    "expr": [
+      {
+        "expr": "<dt>房型</dt>\\s+<dd>([^<]+)",
+        "g": 1
+      },
+      {
+        "expr": "<dt>面积</dt>\\s+<dd>([^<]+)",
+        "g": 1
+      },
+      {
+        "expr": "<dt>类型</dt>\\s+<dd>([^<]+)",
+        "g": 1
+      },
+      {
+        "expr": "<dt>装修</dt>\\s+<dd>([^<]+)",
+        "g": 1
+      },
+      {
+        "expr": "<dt>(朝向</dt>\\s+<dd>[^<]+)",
+        "g": 1
+      },
+      {
+        "expr": "<dt>(楼层</dt>\\s+<dd>[^<]+)",
+        "g": 1
+      }
+    ],
+    "sep": " ",
+    "replace": {
+      "a": "</dt>\\n[^<]+<dd>",
+      "b": ""
+    }
+  },
+  "furniture": {
+    "expr": " 配置：\\s+([\\s\\S]*?)</p>",
+    "g": 1,
+    "replace": [
+      {
+        "a": "</[^>]+><[^>]+>",
+        "b": "/"
+      },
+      {
+        "a": "</[^>]+>|<[^>]+>|\\s+",
+        "b": ""
+      }
+    ]
+  },
+  "phone": {
+    "expr": "<strong class=\"phone\">([^<]+)</strong>",
+    "g": 1
+  },
+  "price": {
+    "expr": "租价</dt>\\s+<dd class=\"og\"><strong><span class=\"f26\">([^<]+)",
+    "g": 1
+  },
+  "payment": {
+    "expr": "租金押付</dt>\\s+<dd>([^<]+)",
+    "g": 1
+  },
+  "contact": {
+    "expr": "<strong class=\"name\">([^<]+)</strong>",
+    "g": 1
+  },
+  "thumbnail": {
+    "expr": "<ul class=\"picMove cf\"[^>]+>[\\s\\S]*?<img src=\"([^\"]+)",
+    "g": 1
+  },
+  "description": {
+    "expr": "<div class=\"pro_con wb\">([\\s\\S]*?)</div>\\s+<div class=\"t_c\"",
+    "g": 1,
+    "replace": [
+      {
+        "a": "<[^>]+>|</[^>]+>",
+        "b": ""
+      },
+      {
+        "a": "\\r\\n|\\n",
+        "b": "<br />"
+      }
+    ]
+  },
+  "cityid": {
+    "expr": " data: {\"city_id\":\"([^\"]+)",
+    "g": 1
   }
 }

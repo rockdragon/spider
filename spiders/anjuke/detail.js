@@ -8,6 +8,7 @@ var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
+var download2Buffer = require('../biz').download2Buffer;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -48,6 +49,7 @@ function parse(fn) {
         house.zone = house.city + ' - ' + house.zone;
         house.source = 'anjuke';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
+        house.publisher = '个人';
         house.publishDate = moment(house.publishDate).toDate();
 
         fn(err, house);
@@ -55,10 +57,13 @@ function parse(fn) {
 }
 
 co(function*() {
-    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
+    var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
+    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
     //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
+    if(house.thumbnail){
+        house.thumbnail = yield download2Buffer(house.thumbnail, house.href);
+    }
     console.log(house);
 });
