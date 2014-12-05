@@ -4,7 +4,105 @@
     "g": 1
   },
   "mapUrl": {
-    "expr": "src=\"(http://zu.fang.com/map/NewMapDetail.aspx[^\"]+)",
+    "expr": "src=\"(http://[^/]+/map/NewMapDetail.aspx[^\"]+)",
     "g": 1
+  },
+  "city": {
+    "expr": "_ub.city = '([^']+)",
+    "g": 1
+  },
+  "zone": {
+    "expr": [
+      {
+        "expr": "小<span[^>]+>*</span>*区：[\\s\\S]*?\\(([\\s\\S]*?)\\)",
+        "g": 1
+      },
+      {
+        "expr": "小<span[^>]+>*</span>*区：\\s+([\\s\\S]*?)\\(",
+        "g": 1
+      }
+    ],
+    "sep": " - ",
+    "replace": [
+      {
+        "a": "</a>&nbsp;<a",
+        "b": "</a> - <a"
+      },
+      {
+        "a": "<[^>]+>|</[^>]+>|&nbsp;",
+        "b": ""
+      }
+    ]
+  },
+  "address": {
+    "expr": "地 址：</p>\\s+<p class=\"info\" title=\"([^\"]+)",
+    "g": 1
+  },
+  "overview": {
+    "expr": [
+      {
+        "expr": "房屋概况：\\s+([\\s\\S]*?)</",
+        "g": 1
+      },
+      {
+        "expr": "合租条件：</p>\\s+<p[^>]+>\\s+([\\s\\S]*?)\\s+</p>",
+        "g": 1
+      }
+    ],
+    "sep": "-",
+    "replace": [
+      {
+        "a": "\\s+",
+        "b": ""
+      },
+      {
+        "a": "-",
+        "b": " "
+      }
+    ]
+  },
+  "furniture": {
+    "expr": "配套设施：\\s+([\\s\\S]*?)</ul>",
+    "g": 1,
+    "replace": {
+      "a": "<[^>]+>|</[^>]+>|\\s+|&nbsp;",
+      "b": ""
+    }
+  },
+  "phone": {
+    "expr": "<span class=\"telno0\">([^<]+)",
+    "g": 1
+  },
+  "price": {
+    "expr": "<span class=\"num red\">\\s+([^<]+)",
+    "g": 1
+  },
+  "payment": {
+    "expr": "<span class=\"num red\">[\\s\\S]*?元/月\\[([^\\]]+)\\]",
+    "g": 1
+  },
+  "contact": {
+    "expr": "<span class=\"name floatl\" id=\"Span2\">([^\\s]+)",
+    "g": 1
+  },
+  "thumbnail": {
+    "expr": "<li class=\"current\">\\s+<img src=\"([^\"]+)",
+    "g": 1
+  },
+  "publishDate": {
+    "expr": "发布时间：([^(<]+)",
+    "g": 1
+  },
+  "description": {
+    "expr": "<div class=\"Introduce floatr\"[^>]+>\\s+([\\s\\S]*?)\\s+</div>",
+    "g": 1,
+    "replace": [{
+      "a": "\\s+",
+      "b": ""
+    },{
+      "a":"<p>联系我时，请说是在搜房网上看到的，谢谢！</p>",
+      "b":""
+    }
+    ]
   }
 }

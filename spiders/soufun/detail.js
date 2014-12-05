@@ -8,6 +8,7 @@ var resolve = require('url').resolve;
 var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
+var download2Buffer = require('../biz').download2Buffer;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -46,25 +47,33 @@ function parse(fn) {
         var jsonFile = path.join(process.cwd(), 'detail.json');
         var house = bravo.Parse(jsonFile, html);
         house.source = 'soufun';
+        house.publisher = '个人';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
+        house.publishDate = moment(house.publishDate).toDate();
 
         fn(err, house);
     };
 }
 
 co(function*() {
-    //var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
+    var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
     //var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
-    var d = new Detail('http://zu.fang.com/chuzu/1_58826425_-1.htm');
+    //var d = new Detail('http://zu.fang.com/chuzu/1_58826425_-1.htm');
+    //var d = new Detail('http://zu.sh.fang.com/chuzu/1_53050553_-1.htm');
+    //var d = new Detail('http://zu.cq.fang.com/chuzu/1_51072822_-1.htm');
     var house = yield d.getDetail();
     if (house.mapUrl) {//没有经纬度的不收录
         var content = yield getURL(house.mapUrl);
         var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
-        if(matched){
-            house.longitude =  matched[1];
+        if (matched) {
+            house.longitude = matched[1];
             house.latitude = matched[2];
         }
         delete house.mapUrl;
+
+        if (house.thumbnail) {//图片
+            house.thumbnail = yield download2Buffer(house.thumbnail, house.href);
+        }
     }
     console.log(house);
 });
