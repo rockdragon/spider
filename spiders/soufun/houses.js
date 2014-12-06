@@ -52,7 +52,7 @@ function parse(fn) {
 
             var $elements = $(this).children();
 
-            house.thumbnail = $($elements[0]).find('a img').attr('src');
+            house.housePics = $($elements[0]).find('a img').attr('src');
 
             var $href = $($elements[1]).find('p.title a');
             house.title = $href.text();

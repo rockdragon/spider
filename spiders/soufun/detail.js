@@ -71,8 +71,8 @@ co(function*() {
         }
         delete house.mapUrl;
 
-        if (house.thumbnail) {//图片
-            house.thumbnail = yield download2Buffer(house.thumbnail, house.href);
+        if (house.housePics) {//图片
+            house.housePics = yield download2Buffer(house.housePics, house.href);
         }
     }
     console.log(house);

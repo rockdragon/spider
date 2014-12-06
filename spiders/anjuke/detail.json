@@ -1,5 +1,5 @@
 {
-  "id": {
+  "sourceId": {
     "expr": "propID: '([^']+)'",
     "g": 1
   },
@@ -133,7 +133,7 @@
     "expr": "<strong class=\"name\">([^<]+)</strong>",
     "g": 1
   },
-  "thumbnail": {
+  "housePics": {
     "expr": "<ul class=\"picMove cf\"[^>]+>[\\s\\S]*?<img src=\"([^\"]+)",
     "g": 1
   },

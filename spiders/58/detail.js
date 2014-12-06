@@ -65,7 +65,7 @@ function parse(fn) {
         if (house.publisher === '个人') {
             //个人Phone分两步走:获取JSON,提取图片；下载图片
             house.phoneURL = util.format('http://yuzufang.house.58.com/common/getinfophonebyauth?infoid=%s&cityId=%s',
-                house.id, house.cityId);
+                house.sourceId, house.cityId);
         }
         fn(err, house);
     };
@@ -84,7 +84,7 @@ co(function*() {
         delete house.phoneURL;
     }
     if(house.galleryURL){
-        house.thumbnail = yield download2Buffer(house.galleryURL, house.href);
+        house.housePics = yield download2Buffer(house.galleryURL, house.href);
         delete house.galleryURL;
     }
     console.log(house);

@@ -41,7 +41,7 @@ function parse(fn) {
             var house = new model.House({city: city});
             var $elements = $(this).children();
 
-            house.thumbnail = $($elements[0]).find('a img').attr('src');
+            house.housePics = $($elements[0]).find('a img').attr('src');
 
             var $href = $($elements[1]).find('h3 a');
             house.title = $href.text();

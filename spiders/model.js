@@ -5,7 +5,7 @@ module.exports.HouseModel = HouseModel;
 /*
  房模型
  @opt:{
- id             hash(source + '_' +  '35997962' or '20160857713541' or '53050553')
+ sourceId       '35997962' or '20160857713541' or '53050553'
  province       '北京'
  city           '北京'
  zone           '北京 - 昌平 - 沙河镇'
@@ -19,7 +19,7 @@ module.exports.HouseModel = HouseModel;
  payment        '押一付三' '季付' '半年付' '年付' '面议'
  publisher      '个人' '中介'
  contact        '郑小姐'
- thumbnail      图片<BLOB>
+ housePics      图片<BLOB>数组
  href           'http://bj.58.com/hezu/19996422443272x.shtml'
  source         'ganji' '58' 'anjuke' 'soufun'
  publishDate    '2014/11/15'
@@ -31,7 +31,7 @@ module.exports.HouseModel = HouseModel;
  */
 function House(opt) {
     opt = opt || {};
-    if (opt.id)this.id = opt.id;
+    if (opt.sourceId)this.sourceId = opt.sourceId;
     if (opt.province)this.province = opt.province;
     if (opt.city)this.city = opt.city;
     if (opt.zone)this.zone = opt.zone;
@@ -45,7 +45,7 @@ function House(opt) {
     if (opt.payment)this.payment = opt.payment;
     if (opt.publisher)this.publisher = opt.publisher;
     if (opt.contact)this.contact = opt.contact;
-    if (opt.thumbnail)this.thumbnail = opt.thumbnail;
+    if (opt.housePics)this.housePics = opt.housePics;
     if (opt.href)this.href = opt.href;
     if (opt.source)this.source = opt.source;
     if (opt.publishDate)this.publishDate = opt.publishDate;
@@ -70,15 +70,16 @@ function listPage(opt) {
     if (opt.pages)this.pages = opt.pages;
 }
 
+var config = require('../modules/config/configUtils');
 var Sequelize = require('sequelize')
-    , sequelize = new Sequelize('mysql://root:system@127.0.0.1:3306/spider');
+    , sequelize = new Sequelize(config.getConfigs().DBConnection);
 /*
  Data Model
 
  * 没有经纬度的不收录
  */
-var HouseModel = sequelize.define('Houses', {
-    id: {type: Sequelize.STRING, primaryKey: true, unique: true},
+var HouseModel = sequelize.define('House', {
+    id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
     province: {type: Sequelize.STRING},
     city: {type: Sequelize.STRING},
     zone: {type: Sequelize.STRING},
@@ -92,7 +93,6 @@ var HouseModel = sequelize.define('Houses', {
     payment: {type: Sequelize.STRING},
     publisher: {type: Sequelize.STRING},
     contact: {type: Sequelize.STRING},
-    thumbnail: {type: Sequelize.BLOB},
     href: {type: Sequelize.STRING, allowNull: false},
     source: {type: Sequelize.STRING},
     publishDate: {type: Sequelize.DATE, allowNull: false},
@@ -115,6 +115,38 @@ var HouseModel = sequelize.define('Houses', {
     freezeTableName: true,
 
     // define the table's name
-    tableName: 'Houses'
+    tableName: 'House',
+
+    //indexes
+    indexes: [
+        {
+            name: 'pubdate',
+            method: 'BTREE',
+            fields: [{attribute: 'publishDate', order: 'DESC'}]
+        }
+    ]
 });
 
+var HousePicModel = sequelize.define('HousePic', {
+    id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
+    housePic: {type: Sequelize.BLOB}
+}, {
+    // add the timestamp attributes (updatedAt, createdAt)
+    timestamps: true,
+
+    // don't delete database entries but set the newly added attribute deletedAt
+    // to the current date (when deletion was done). paranoid will only work if
+    // timestamps are enabled
+    paranoid: true,
+
+    // disable the modification of tablenames; By default, sequelize will automatically
+    // transform all passed model names (first parameter of define) into plural.
+    // if you don't want that, set the following
+    freezeTableName: true,
+
+    // define the table's name
+    tableName: 'HousePic'
+});
+
+HouseModel.hasMany(HousePicModel);
+HousePicModel.belongsTo(HouseModel);

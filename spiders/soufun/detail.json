@@ -1,5 +1,5 @@
 {
-  "id": {
+  "sourceId": {
     "expr": "var sharehouseid = '([^']+)'",
     "g": 1
   },
@@ -89,7 +89,7 @@
     "expr": "<span class=\"name floatl\" id=\"Span2\">([^\\s]+)",
     "g": 1
   },
-  "thumbnail": {
+  "housePics": {
     "expr": "<li class=\"current\">\\s+<img src=\"([^\"]+)",
     "g": 1
   },

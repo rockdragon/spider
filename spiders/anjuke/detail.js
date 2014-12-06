@@ -62,8 +62,8 @@ co(function*() {
     var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
     //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
-    if(house.thumbnail){
-        house.thumbnail = yield download2Buffer(house.thumbnail, house.href);
+    if(house.housePics){
+        house.housePics = yield download2Buffer(house.housePics, house.href);
     }
     console.log(house);
 });

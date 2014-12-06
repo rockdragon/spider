@@ -57,11 +57,9 @@ function extractRequestHref(href, path){
     return href;
 }
 
-var cryptoUtils = require('../modules/other/cryptoUtils');
 var model = require('./model');
 var delimiter = '-';
 function addHouseDetail(detail){
     var house = new model.House(detail);
-    house.id = cryptoUtils.encrypt(house.source  + delimiter + house.id);
     //TODO: convert house to HouseModel
 }
