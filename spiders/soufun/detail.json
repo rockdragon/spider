@@ -89,10 +89,6 @@
     "expr": "<span class=\"name floatl\" id=\"Span2\">([^\\s]+)",
     "g": 1
   },
-  "housePics": {
-    "expr": "<li class=\"current\">\\s+<img src=\"([^\"]+)",
-    "g": 1
-  },
   "publishDate": {
     "expr": "发布时间：([^(<]+)",
     "g": 1

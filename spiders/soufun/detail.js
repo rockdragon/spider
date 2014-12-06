@@ -9,6 +9,7 @@ var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
 var download2Buffer = require('../biz').download2Buffer;
+var sleep = require('../biz').sleep;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -38,10 +39,10 @@ Detail.prototype.getDetail = function () {
 function parse(fn) {
     var url = this.url;
     return function (err, res, html) {
-        //var $ = cheerio.load(html, {
-        //    normalizeWhitespace: true,
-        //    xmlMode: true
-        //});
+        var $ = cheerio.load(html, {
+            normalizeWhitespace: true,
+            xmlMode: true
+        });
 
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
@@ -51,15 +52,23 @@ function parse(fn) {
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
         house.publishDate = moment(house.publishDate).toDate();
 
+        house.pics = [];//bg_nopic.jpg / bg_default.jpg
+        $('#thumbnail ul li img').each(function (idx, ele) {
+            var bigSize = '490x350.jpg';
+            var src = $(this).attr('src');
+            if (_s.endsWith(src, bigSize))
+                house.pics.push(src);
+        });
+
         fn(err, house);
     };
 }
 
 co(function*() {
     //var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
-    //var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
+    var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
     //var d = new Detail('http://zu.fang.com/chuzu/1_58826425_-1.htm');
-    var d = new Detail('http://zu.sh.fang.com/chuzu/1_53050553_-1.htm');
+    //var d = new Detail('http://zu.sh.fang.com/chuzu/1_53050553_-1.htm');
     //var d = new Detail('http://zu.cq.fang.com/chuzu/1_51072822_-1.htm');
     var house = yield d.getDetail();
     if (house.mapUrl) {//没有经纬度的不收录
@@ -71,8 +80,15 @@ co(function*() {
         }
         delete house.mapUrl;
 
-        if (house.housePics) {//图片
-            house.housePics = yield download2Buffer(house.housePics, house.href);
+        if (house.pics) {//图片
+            //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+            house.housePics = [];
+            for (var i = 0, len = house.pics.length; i < len; i++) {
+                var blob = yield download2Buffer(house.pics[i], house.href);
+                house.housePics.push(blob);
+                sleep(1);
+            }
+            delete house.pics;
         }
     }
     console.log(house);

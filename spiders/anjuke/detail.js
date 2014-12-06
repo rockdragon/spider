@@ -55,11 +55,12 @@ function parse(fn) {
 
         house.pics = [];//bg_nopic.jpg / bg_default.jpg
         $('div.bigps div.picCon ul li a img').each(function (idx, ele) {
+            var bigSize = '600x450.jpg';
             var src = $(this).attr('src');
             var dataSrc = $(this).attr('data-src');
-            var picURL = _s.endsWith(src, '600x450.jpg')
+            var picURL = _s.endsWith(src, bigSize)
                 ? src
-                : (_s.endsWith(dataSrc, '600x450.jpg') ? dataSrc : null);
+                : (_s.endsWith(dataSrc, bigSize) ? dataSrc : null);
             if (picURL)
                 house.pics.push(picURL);
         });
@@ -69,10 +70,10 @@ function parse(fn) {
 }
 
 co(function*() {
-    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
+    var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
     //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
+    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
     if (house.pics) {
         //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
