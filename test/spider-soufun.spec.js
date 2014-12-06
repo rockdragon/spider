@@ -19,7 +19,7 @@ describe('soufun testing', function () {
 
     it('hot zone testing', function(done){
         co(function*() {
-            var zone = new HotZone('http://zu.sh.fang.com/house/list/a21/');
+            var zone = new HotZone('http://zu.sh.fang.com/house/list/a21/' );
             var hotZones = yield zone.getHotZones();
             expect(hotZones).not.to.be(null);
             Object.prototype.toString.call(hotZones).should.equal('[object Array]');
