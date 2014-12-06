@@ -1,6 +1,3 @@
-module.exports.House = House;
-module.exports.listPage = listPage;
-
 /*
  房模型
  @opt:{
@@ -148,7 +145,15 @@ var HousePicModel = sequelize.define('HousePic', {
 });
 
 HouseModel.hasMany(HousePicModel, {as: 'HousePics'});
-HousePicModel.belongsTo(HouseModel, {as: 'House', foreignKey: 'id', constraints: false});
+HousePicModel.belongsTo(HouseModel, {as: 'House', foreignKey: 'houseId', constraints: false});
 
+function sync(){
+    return sequelize.sync();
+}
+
+module.exports.House = House;
+module.exports.listPage = listPage;
 module.exports.HouseModel = HouseModel;
 module.exports.HousePicModel = HousePicModel;
+module.exports.sequelize = sequelize;
+module.exports.sync = sync;
