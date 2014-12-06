@@ -56,12 +56,3 @@ function extractRequestHref(href, path){
     }
     return href;
 }
-
-/**
- * bulk operation
- */
-var model = require('./model');
-module.exports.bulkCreate = bulkCreate;
-function bulkCreate(details){
-    return model.HouseModel.bulkCreate(details);
-}

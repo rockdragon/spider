@@ -92,7 +92,7 @@ var HouseModel = sequelize.define('House', {
     href: {type: Sequelize.STRING, allowNull: false},
     source: {type: Sequelize.STRING},
     publishDate: {type: Sequelize.DATE, allowNull: false},
-    description: {type: Sequelize.STRING},
+    description: {type: Sequelize.TEXT},
     longitude: {type: Sequelize.DECIMAL},
     latitude: {type: Sequelize.DECIMAL},
     cityId: {type: Sequelize.INTEGER}
@@ -144,11 +144,41 @@ var HousePicModel = sequelize.define('HousePic', {
     tableName: 'HousePic'
 });
 
-HouseModel.hasMany(HousePicModel, {as: 'HousePics'});
-HousePicModel.belongsTo(HouseModel, {as: 'House', foreignKey: 'houseId', constraints: false});
+HouseModel.hasMany(HousePicModel, {as: 'housePics'});
+HousePicModel.belongsTo(HouseModel);
 
-function sync(){
+/*
+ * synchronize DB
+ * */
+function synchronize() {
     return sequelize.sync();
+}
+
+/*
+ * bulk insert
+ */
+var _ = require('underscore');
+function bulkCreate(house) {
+    return HouseModel.create(house).then(function (houseFromDB) {
+        var pics = [];
+        for (var i = 0, len = house.housePics.length; i < len; i++) {
+            house.housePics[i].HouseId = houseFromDB.id;
+            pics.push(house.housePics[i]);
+        }
+        return HousePicModel.bulkCreate(pics);
+    });
+}
+
+/*
+ * find By Id
+ */
+function findOne(opts){
+    return HouseModel.findOne(opts).then(function(house){
+        return HousePicModel.findAll({HouseId: house.id}).then(function(housePics){
+            house.housePics = housePics;
+            return house;
+        });
+    });
 }
 
 module.exports.House = House;
@@ -156,4 +186,6 @@ module.exports.listPage = listPage;
 module.exports.HouseModel = HouseModel;
 module.exports.HousePicModel = HousePicModel;
 module.exports.sequelize = sequelize;
-module.exports.sync = sync;
+module.exports.synchronize = synchronize;
+module.exports.bulkCreate = bulkCreate;
+module.exports.findOne = findOne;
