@@ -9,6 +9,7 @@ var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
 var download2Buffer = require('../biz').download2Buffer;
+var sleep = require('../biz').sleep;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -38,10 +39,10 @@ Detail.prototype.getDetail = function () {
 function parse(fn) {
     var url = this.url;
     return function (err, res, html) {
-        //var $ = cheerio.load(html, {
-        //    normalizeWhitespace: true,
-        //    xmlMode: true
-        //});
+        var $ = cheerio.load(html, {
+            normalizeWhitespace: true,
+            xmlMode: true
+        });
 
         //collect page info
         var jsonFile = path.join(process.cwd(), 'detail.json');
@@ -52,6 +53,17 @@ function parse(fn) {
         house.publisher = '个人';
         house.publishDate = moment(house.publishDate).toDate();
 
+        house.pics = [];//bg_nopic.jpg / bg_default.jpg
+        $('div.bigps div.picCon ul li a img').each(function (idx, ele) {
+            var src = $(this).attr('src');
+            var dataSrc = $(this).attr('data-src');
+            var picURL = _s.endsWith(src, '600x450.jpg')
+                ? src
+                : (_s.endsWith(dataSrc, '600x450.jpg') ? dataSrc : null);
+            if (picURL)
+                house.pics.push(picURL);
+        });
+
         fn(err, house);
     };
 }
@@ -59,11 +71,18 @@ function parse(fn) {
 co(function*() {
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
     //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
+    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
+    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
-    if(house.housePics){
-        house.housePics = yield download2Buffer(house.housePics, house.href);
+    if (house.pics) {
+        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+        house.housePics = [];
+        for (var i = 0, len = house.pics.length; i < len; i++) {
+            var blob = yield download2Buffer(house.pics[i], house.href);
+            house.housePics.push(blob);
+            sleep(1);
+        }
+        delete house.pics;
     }
     console.log(house);
 });

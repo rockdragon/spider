@@ -133,12 +133,8 @@
     "expr": "<strong class=\"name\">([^<]+)</strong>",
     "g": 1
   },
-  "housePics": {
-    "expr": "<ul class=\"picMove cf\"[^>]+>[\\s\\S]*?<img src=\"([^\"]+)",
-    "g": 1
-  },
   "description": {
-    "expr": "<div class=\"pro_con wb\">([\\s\\S]*?)</div>\\s+<div class=\"t_c\"",
+    "expr": "<div class=\"pro_con wb\">\\s*([\\s\\S]*?)\\s*</div>\\s+<div class=\"t_c\"",
     "g": 1,
     "replace": [
       {
