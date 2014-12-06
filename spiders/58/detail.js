@@ -90,7 +90,7 @@ co(function*() {
         house.housePics = [];
         for (var i = 0, len = pics.length; i < len; i++) {
             var blob = yield download2Buffer(pics[i], house.href);
-            house.housePics.push(blob);
+            house.housePics.push({housePic: blob});
             sleep(1);
         }
     }

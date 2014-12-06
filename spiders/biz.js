@@ -57,9 +57,11 @@ function extractRequestHref(href, path){
     return href;
 }
 
+/**
+ * bulk operation
+ */
 var model = require('./model');
-var delimiter = '-';
-function addHouseDetail(detail){
-    var house = new model.House(detail);
-    //TODO: convert house to HouseModel
+module.exports.bulkCreate = bulkCreate;
+function bulkCreate(details){
+    return model.HouseModel.bulkCreate(details);
 }

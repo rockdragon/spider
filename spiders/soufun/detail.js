@@ -66,9 +66,9 @@ function parse(fn) {
 
 co(function*() {
     //var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
-    var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
+    //var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
     //var d = new Detail('http://zu.fang.com/chuzu/1_58826425_-1.htm');
-    //var d = new Detail('http://zu.sh.fang.com/chuzu/1_53050553_-1.htm');
+    var d = new Detail('http://zu.sh.fang.com/chuzu/1_53050553_-1.htm');
     //var d = new Detail('http://zu.cq.fang.com/chuzu/1_51072822_-1.htm');
     var house = yield d.getDetail();
     if (house.mapUrl) {//没有经纬度的不收录
@@ -85,7 +85,7 @@ co(function*() {
             house.housePics = [];
             for (var i = 0, len = house.pics.length; i < len; i++) {
                 var blob = yield download2Buffer(house.pics[i], house.href);
-                house.housePics.push(blob);
+                house.housePics.push({housePic: blob});
                 sleep(1);
             }
             delete house.pics;

@@ -80,7 +80,7 @@ co(function*() {
         house.housePics = [];
         for (var i = 0, len = house.pics.length; i < len; i++) {
             var blob = yield download2Buffer(house.pics[i], house.href);
-            house.housePics.push(blob);
+            house.housePics.push({housePic: blob});
             sleep(1);
         }
         delete house.pics;
