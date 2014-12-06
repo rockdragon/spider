@@ -9,6 +9,7 @@ var getRootURL = require('../../modules/other/pathUtils').getRootURL;
 var extractImgSrc = require('../biz').extractImgSrc;
 var extractRequestHref = require('../biz').extractRequestHref;
 var download2Buffer = require('../biz').download2Buffer;
+var sleep = require('../biz').sleep;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
 var bravo = require('bravo');
@@ -83,9 +84,15 @@ co(function*() {
         house.phonePic = yield download2Buffer(house.phoneURL, house.href);
         delete house.phoneURL;
     }
-    if(house.galleryURL){
-        house.housePics = yield download2Buffer(house.galleryURL, house.href);
-        delete house.galleryURL;
+    if (house.housePics) {
+        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+        var pics = house.housePics.split(',');
+        house.housePics = [];
+        for (var i = 0, len = pics.length; i < len; i++) {
+            var blob = yield download2Buffer(pics[i], house.href);
+            house.housePics.push(blob);
+            sleep(1);
+        }
     }
     console.log(house);
 });

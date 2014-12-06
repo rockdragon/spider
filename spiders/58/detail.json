@@ -95,8 +95,15 @@
     "expr": "baidulat:'([^']+)'",
     "g": 1
   },
-  "galleryURL":{
-    "expr": "<img id=\"img1\" src=['\"]([^'\"]+)'",
-    "g": 1
+  "housePics":{
+    "expr": "<ul id=\"img_smalls\">\\s+([\\s\\S]*?)\\s+</ul>",
+    "g": 1,
+    "replace": [{
+      "a": "</li>\\s+<li>",
+      "b": ","
+    },{
+      "a": "<li>|</li>|<img src=\"|\"/>",
+      "b": ""
+    }]
   }
 }
