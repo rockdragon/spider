@@ -66,126 +66,131 @@ function listPage(opt) {
     if (opt.pages)this.pages = opt.pages;
 }
 
-var config = require('../modules/config/configUtils');
-var Sequelize = require('sequelize')
-    , sequelize = new Sequelize(config.getConfigs().DBConnection);
-/*
- Data Model
+var configs = require('../modules/config/configUtils').getConfigs();
+if(configs && configs.DBConnection) {
+    var Sequelize = require('sequelize')
+        , sequelize = new Sequelize(configs.DBConnection);
+    /*
+     Data Model
 
- * 没有经纬度的不收录
- */
-var HouseModel = sequelize.define('House', {
-    id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
-    province: {type: Sequelize.STRING},
-    city: {type: Sequelize.STRING},
-    zone: {type: Sequelize.STRING},
-    address: {type: Sequelize.STRING},
-    overview: {type: Sequelize.STRING},
-    furniture: {type: Sequelize.STRING},
-    phone: {type: Sequelize.STRING},
-    phonePic: {type: Sequelize.BLOB},
-    title: {type: Sequelize.STRING, allowNull: false},
-    price: {type: Sequelize.DECIMAL, allowNull: false},
-    payment: {type: Sequelize.STRING},
-    publisher: {type: Sequelize.STRING},
-    contact: {type: Sequelize.STRING},
-    href: {type: Sequelize.STRING, allowNull: false},
-    source: {type: Sequelize.STRING},
-    publishDate: {type: Sequelize.DATE, allowNull: false},
-    description: {type: Sequelize.TEXT},
-    longitude: {type: Sequelize.DECIMAL},
-    latitude: {type: Sequelize.DECIMAL},
-    cityId: {type: Sequelize.INTEGER}
-}, {
-    // add the timestamp attributes (updatedAt, createdAt)
-    timestamps: true,
+     * 没有经纬度的不收录
+     */
+    var HouseModel = sequelize.define('House', {
+        id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
+        province: {type: Sequelize.STRING},
+        city: {type: Sequelize.STRING},
+        zone: {type: Sequelize.STRING},
+        address: {type: Sequelize.STRING},
+        overview: {type: Sequelize.STRING},
+        furniture: {type: Sequelize.STRING},
+        phone: {type: Sequelize.STRING},
+        phonePic: {type: Sequelize.BLOB},
+        title: {type: Sequelize.STRING, allowNull: false},
+        price: {type: Sequelize.DECIMAL, allowNull: false},
+        payment: {type: Sequelize.STRING},
+        publisher: {type: Sequelize.STRING},
+        contact: {type: Sequelize.STRING},
+        href: {type: Sequelize.STRING, allowNull: false},
+        source: {type: Sequelize.STRING},
+        publishDate: {type: Sequelize.DATE, allowNull: false},
+        description: {type: Sequelize.TEXT},
+        longitude: {type: Sequelize.DECIMAL},
+        latitude: {type: Sequelize.DECIMAL},
+        cityId: {type: Sequelize.INTEGER}
+    }, {
+        // add the timestamp attributes (updatedAt, createdAt)
+        timestamps: true,
 
-    // don't delete database entries but set the newly added attribute deletedAt
-    // to the current date (when deletion was done). paranoid will only work if
-    // timestamps are enabled
-    paranoid: true,
+        // don't delete database entries but set the newly added attribute deletedAt
+        // to the current date (when deletion was done). paranoid will only work if
+        // timestamps are enabled
+        paranoid: true,
 
-    // disable the modification of tablenames; By default, sequelize will automatically
-    // transform all passed model names (first parameter of define) into plural.
-    // if you don't want that, set the following
-    freezeTableName: true,
+        // disable the modification of tablenames; By default, sequelize will automatically
+        // transform all passed model names (first parameter of define) into plural.
+        // if you don't want that, set the following
+        freezeTableName: true,
 
-    // define the table's name
-    tableName: 'House',
+        // define the table's name
+        tableName: 'House',
 
-    //indexes
-    indexes: [
-        {
-            name: 'pubdate',
-            method: 'BTREE',
-            fields: [{attribute: 'publishDate', order: 'DESC'}]
-        }
-    ]
-});
-
-var HousePicModel = sequelize.define('HousePic', {
-    id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
-    housePic: {type: Sequelize.BLOB}
-}, {
-    // add the timestamp attributes (updatedAt, createdAt)
-    timestamps: true,
-
-    // don't delete database entries but set the newly added attribute deletedAt
-    // to the current date (when deletion was done). paranoid will only work if
-    // timestamps are enabled
-    paranoid: true,
-
-    // disable the modification of tablenames; By default, sequelize will automatically
-    // transform all passed model names (first parameter of define) into plural.
-    // if you don't want that, set the following
-    freezeTableName: true,
-
-    // define the table's name
-    tableName: 'HousePic'
-});
-
-HouseModel.hasMany(HousePicModel, {as: 'housePics'});
-HousePicModel.belongsTo(HouseModel);
-
-/*
- * synchronize DB
- * */
-function synchronize() {
-    return sequelize.sync();
-}
-
-/*
- * bulk insert
- */
-var _ = require('underscore');
-function bulkCreate(house) {
-    return HouseModel.create(house).then(function (houseFromDB) {
-        var pics = [];
-        for (var i = 0, len = house.housePics.length; i < len; i++) {
-            house.housePics[i].HouseId = houseFromDB.id;
-            pics.push(house.housePics[i]);
-        }
-        return HousePicModel.bulkCreate(pics);
+        //indexes
+        indexes: [
+            {
+                name: 'pubdate',
+                method: 'BTREE',
+                fields: [{attribute: 'publishDate', order: 'DESC'}]
+            }
+        ]
     });
-}
 
-/*
- * find By Id
- */
-function findOne(opts){
-    return HouseModel.findOne(opts).then(function(house){
-        return HousePicModel.findAll({HouseId: house.id}).then(function(housePics){
-            house.housePics = housePics;
-            return house;
+    var HousePicModel = sequelize.define('HousePic', {
+        id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
+        housePic: {type: Sequelize.BLOB}
+    }, {
+        // add the timestamp attributes (updatedAt, createdAt)
+        timestamps: true,
+
+        // don't delete database entries but set the newly added attribute deletedAt
+        // to the current date (when deletion was done). paranoid will only work if
+        // timestamps are enabled
+        paranoid: true,
+
+        // disable the modification of tablenames; By default, sequelize will automatically
+        // transform all passed model names (first parameter of define) into plural.
+        // if you don't want that, set the following
+        freezeTableName: true,
+
+        // define the table's name
+        tableName: 'HousePic'
+    });
+
+    HouseModel.hasMany(HousePicModel, {as: 'housePics'});
+    HousePicModel.belongsTo(HouseModel);
+
+    /*
+     * synchronize DB
+     * */
+    function synchronize() {
+        return sequelize.sync();
+    }
+
+    /*
+     * bulk insert
+     */
+    var _ = require('underscore');
+
+    function bulkCreate(house) {
+        return HouseModel.create(house).then(function (houseFromDB) {
+            var pics = [];
+            for (var i = 0, len = house.housePics.length; i < len; i++) {
+                house.housePics[i].HouseId = houseFromDB.id;
+                pics.push(house.housePics[i]);
+            }
+            return HousePicModel.bulkCreate(pics);
         });
-    });
+    }
+
+    /*
+     * find By Id
+     */
+    function findOne(opts) {
+        return HouseModel.findOne(opts).then(function (house) {
+            return HousePicModel.findAll({HouseId: house.id}).then(function (housePics) {
+                house.housePics = housePics;
+                return house;
+            });
+        });
+    }
+
+    module.exports.HouseModel = HouseModel;
+    module.exports.HousePicModel = HousePicModel;
+    module.exports.sequelize = sequelize;
+    module.exports.synchronize = synchronize;
+    module.exports.bulkCreate = bulkCreate;
+    module.exports.findOne = findOne;
 }
 
 module.exports.House = House;
 module.exports.listPage = listPage;
-module.exports.HouseModel = HouseModel;
-module.exports.HousePicModel = HousePicModel;
-module.exports.sequelize = sequelize;
-module.exports.synchronize = synchronize;
-module.exports.bulkCreate = bulkCreate;
-module.exports.findOne = findOne;
+
