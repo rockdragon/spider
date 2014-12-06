@@ -41,27 +41,8 @@ function parse(fn) {
             var house = new model.House({city: city});
             var $elements = $(this).children();
 
-            house.housePics = $($elements[0]).find('a img').attr('src');
-
             var $href = $($elements[1]).find('h3 a');
-            house.title = $href.text();
             house.href = $href.attr('href');
-            var $span = $($elements[1]).find('h3 span');
-            if(_s.include($span, '个人'))
-                house.publisher = '个人';
-            var $infos = $($elements[1]).find('p.p_tag').text().split('|');
-            house.houseType = $infos[0].trim();
-            house.category = $infos[1].trim();
-            house.fitment = $infos[2].trim();
-            house.floor = $infos[3].trim();
-            var $address = $($elements[1]).find('address').text().split('&nbsp;&nbsp;');
-            house.building = $address[0];
-            var $districts = $address[1].split('-');
-            house.district = _s.trim($districts[0],'[');
-            house.bizDistrict = $districts[1];
-            house.address = _s.trim($address[2], ']');
-
-            house.price =   $($elements[2]).find('strong').text();
 
             listPage.houses.push(house);
         });
