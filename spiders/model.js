@@ -172,7 +172,7 @@ if(configs && configs.DBConnection) {
     }
 
     /*
-     * find By Id
+     * find one
      */
     function findOne(opts) {
         return HouseModel.findOne(opts).then(function (house) {
