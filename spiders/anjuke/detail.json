@@ -151,7 +151,7 @@
       }
     ]
   },
-  "cityid": {
+  "cityId": {
     "expr": " data: {\"city_id\":\"([^\"]+)",
     "g": 1
   }

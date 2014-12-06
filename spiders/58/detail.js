@@ -65,8 +65,7 @@ function parse(fn) {
         if (house.publisher === '个人') {
             //个人Phone分两步走:获取JSON,提取图片；下载图片
             house.phoneURL = util.format('http://yuzufang.house.58.com/common/getinfophonebyauth?infoid=%s&cityId=%s',
-                house.id, house.cityid);
-            delete house.cityid;
+                house.id, house.cityId);
         }
         fn(err, house);
     };

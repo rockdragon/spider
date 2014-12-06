@@ -55,7 +55,7 @@
       "b": ""
     }
   },
-  "cityid": {
+  "cityId": {
     "expr": "locallist:\\[{dispid:'([^']+)'",
     "g": 1
   },

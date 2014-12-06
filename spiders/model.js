@@ -26,7 +26,7 @@ module.exports.HouseModel = HouseModel;
  description    '...'
  longitude      '116.465118408203'   经度
  latitude       '39.9008178710938'   纬度
- cityid         '1'
+ cityId         '1'
  }
  */
 function House(opt) {
@@ -52,7 +52,7 @@ function House(opt) {
     if (opt.description)this.description = opt.description;
     if (opt.longitude)this.longitude = opt.longitude;
     if (opt.latitude)this.latitude = opt.latitude;
-    if (opt.cityid)this.cityid = opt.cityid;
+    if (opt.cityId)this.cityId = opt.cityId;
 }
 
 /*
@@ -75,30 +75,46 @@ var Sequelize = require('sequelize')
 /*
  Data Model
 
-            * 没有经纬度的不收录
+ * 没有经纬度的不收录
  */
-var HouseModel = sequelize.define('house', {
-    id          : {type: Sequelize.STRING, primaryKey: true, unique: true},
-    province    : {type: Sequelize.STRING},
-    city        : {type: Sequelize.STRING},
-    zone        : {type: Sequelize.STRING},
-    address     : {type: Sequelize.STRING},
-    overview    : {type: Sequelize.STRING},
-    furniture   : {type: Sequelize.STRING},
-    phone       : {type: Sequelize.STRING},
-    phonePic    : {type: Sequelize.BLOB},
-    title       : {type: Sequelize.STRING, allowNull: false},
-    price       : {type: Sequelize.DECIMAL, allowNull: false},
-    payment     : {type: Sequelize.STRING},
-    publisher   : {type: Sequelize.STRING},
-    contact     : {type: Sequelize.STRING},
-    thumbnail   : {type: Sequelize.BLOB},
-    href        : {type: Sequelize.STRING, allowNull: false},
-    source      : {type: Sequelize.STRING},
-    publishDate : {type: Sequelize.DATE, allowNull: false},
-    description : {type: Sequelize.STRING},
-    longitude   : {type: Sequelize.DECIMAL},
-    latitude    : {type: Sequelize.DECIMAL},
-    cityid      : {type: Sequelize.INTEGER}
+var HouseModel = sequelize.define('Houses', {
+    id: {type: Sequelize.STRING, primaryKey: true, unique: true},
+    province: {type: Sequelize.STRING},
+    city: {type: Sequelize.STRING},
+    zone: {type: Sequelize.STRING},
+    address: {type: Sequelize.STRING},
+    overview: {type: Sequelize.STRING},
+    furniture: {type: Sequelize.STRING},
+    phone: {type: Sequelize.STRING},
+    phonePic: {type: Sequelize.BLOB},
+    title: {type: Sequelize.STRING, allowNull: false},
+    price: {type: Sequelize.DECIMAL, allowNull: false},
+    payment: {type: Sequelize.STRING},
+    publisher: {type: Sequelize.STRING},
+    contact: {type: Sequelize.STRING},
+    thumbnail: {type: Sequelize.BLOB},
+    href: {type: Sequelize.STRING, allowNull: false},
+    source: {type: Sequelize.STRING},
+    publishDate: {type: Sequelize.DATE, allowNull: false},
+    description: {type: Sequelize.STRING},
+    longitude: {type: Sequelize.DECIMAL},
+    latitude: {type: Sequelize.DECIMAL},
+    cityId: {type: Sequelize.INTEGER}
+}, {
+    // add the timestamp attributes (updatedAt, createdAt)
+    timestamps: true,
+
+    // don't delete database entries but set the newly added attribute deletedAt
+    // to the current date (when deletion was done). paranoid will only work if
+    // timestamps are enabled
+    paranoid: true,
+
+    // disable the modification of tablenames; By default, sequelize will automatically
+    // transform all passed model names (first parameter of define) into plural.
+    // if you don't want that, set the following
+    freezeTableName: true,
+
+    // define the table's name
+    tableName: 'Houses'
 });
 
