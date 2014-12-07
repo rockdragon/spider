@@ -1,6 +1,6 @@
 {
   "name": "spider",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "start": "node --harmony ./bin/start.js",
     "test": "mocha --recursive --timeout 500000 -R spec --require should --harmony test/ --bail",
