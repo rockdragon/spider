@@ -19,6 +19,7 @@ var path = require('path');
 var moment = require('moment');
 var util = require('util');
 var model = require('../model');
+var getAbsolutePath = require('../../modules/other/pathUtils').getAbsolutePath;
 
 /*
  详情
@@ -48,7 +49,7 @@ function parse(fn) {
         //});
 
         //collect page info
-        var jsonFile = path.join(process.cwd(), 'detail.json');
+        var jsonFile = getAbsolutePath('spiders/58/detail.json');
         var house = bravo.Parse(jsonFile, html);
         house.source = '58';
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
@@ -75,33 +76,33 @@ function parse(fn) {
     };
 }
 
-co(function*() {
-    //var d = new Detail('http://jing.58.com/adJump?adType=3&target=pZwY0jCfsvFJsWN3shPfUiqlIyu6Uh0fnWTQPWT3PH0LnHndPj73sMPCIAd_sjT8nHnznHTdrHDQn1c3nHTYP1bYnjbOrjE1nHnLnj9OPHE3nzkQrjnvn1mYrik_FhQfuvIGU-qd0vRzgv-b5HThuA-107qWmgw-5H9huA-107q_UvP6UjYQnHEzFhP_pyR8I7qd0vRzgv-b5iu-UMwGIZ-GujYznjDvnj9dP10Qn1NYniud0vRzpyEqnW01njb1nHDhpyd-pHYhuyOYpgwOIZ-kuHYkFhR8IA-YXRqWmgw-5iu-UMwGIZ-xUAqWmykqFhwG0LKxIA-VuHYQPjDLPHDznWT3PjcdFMKf0v-Ypyq85HEOFhP_pyPopyEqujIBnhFhuHnVPHcOuBYYujn1syD3nW0VP1nYPhcvnvNYPvEvFMK60h7V5iukUA7YuhqzUHYVnE&end=end');
-    var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
-    //var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
-    //var d = new Detail('http://bj.58.com/zufang/20160520080258x.shtml');
-    var house = yield d.getDetail();
-    if (house.phoneURL) {
-        var phoneJSON = yield getURL(house.phoneURL);
-        house.phoneURL = extractImgSrc(phoneJSON);
-        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
-        delete house.phoneURL;
-    }
-    if (house.housePics) {
-        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
-        var pics = house.housePics.split(',');
-        house.housePics = [];
-        for (var i = 0, len = pics.length; i < len; i++) {
-            var blob = yield download2Buffer(pics[i], house.href);
-            house.housePics.push({housePic: blob});
-            sleep(2);
-        }
-    }
-    console.log(house);
-
-    yield model.synchronize();
-    onSuccess('synchronization successfully.');
-
-    yield model.bulkCreate(house);
-    onSuccess('creation successfully.');
-}).catch(onError);
+//co(function*() {
+//    //var d = new Detail('http://jing.58.com/adJump?adType=3&target=pZwY0jCfsvFJsWN3shPfUiqlIyu6Uh0fnWTQPWT3PH0LnHndPj73sMPCIAd_sjT8nHnznHTdrHDQn1c3nHTYP1bYnjbOrjE1nHnLnj9OPHE3nzkQrjnvn1mYrik_FhQfuvIGU-qd0vRzgv-b5HThuA-107qWmgw-5H9huA-107q_UvP6UjYQnHEzFhP_pyR8I7qd0vRzgv-b5iu-UMwGIZ-GujYznjDvnj9dP10Qn1NYniud0vRzpyEqnW01njb1nHDhpyd-pHYhuyOYpgwOIZ-kuHYkFhR8IA-YXRqWmgw-5iu-UMwGIZ-xUAqWmykqFhwG0LKxIA-VuHYQPjDLPHDznWT3PjcdFMKf0v-Ypyq85HEOFhP_pyPopyEqujIBnhFhuHnVPHcOuBYYujn1syD3nW0VP1nYPhcvnvNYPvEvFMK60h7V5iukUA7YuhqzUHYVnE&end=end');
+//    var d = new Detail('http://bj.58.com/zufang/20114437262986x.shtml');
+//    //var d = new Detail('http://bj.58.com/zufang/19562028299138x.shtml');
+//    //var d = new Detail('http://bj.58.com/zufang/20160520080258x.shtml');
+//    var house = yield d.getDetail();
+//    if (house.phoneURL) {
+//        var phoneJSON = yield getURL(house.phoneURL);
+//        house.phoneURL = extractImgSrc(phoneJSON);
+//        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
+//        delete house.phoneURL;
+//    }
+//    if (house.housePics) {
+//        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+//        var pics = house.housePics.split(',');
+//        house.housePics = [];
+//        for (var i = 0, len = pics.length; i < len; i++) {
+//            var blob = yield download2Buffer(pics[i], house.href);
+//            house.housePics.push({housePic: blob});
+//            sleep(2);
+//        }
+//    }
+//    console.log(house);
+//
+//    yield model.synchronize();
+//    onSuccess('synchronization successfully.');
+//
+//    yield model.bulkCreate(house);
+//    onSuccess('creation successfully.');
+//}).catch(onError);

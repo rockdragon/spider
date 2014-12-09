@@ -73,3 +73,9 @@ function getRootURL(url){
     return m ? m[0] : null;
 }
 module.exports.getRootURL = getRootURL;
+
+function getAbsolutePath(suffix){
+    var root = process.env.spider_home || process.cwd();
+    return path.join(root, suffix);
+}
+module.exports.getAbsolutePath = getAbsolutePath;

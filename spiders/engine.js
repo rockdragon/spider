@@ -3,28 +3,29 @@
     var path = require('path');
     var child_process = require('child_process');
     var _ = require('underscore');
-    var pathUtils = require('../modules/other/pathUtils');
-    var Parent = require('../modules/scheduler/Parent');
+    var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
+    var pathUtils = require(getAbsolutePath('modules/other/pathUtils'));
+    var Parent = require(getAbsolutePath('modules/scheduler/Parent'));
 
-    var directories = pathUtils.getSubDirectories(process.cwd());
+    var directories = pathUtils.getSubDirectories(getAbsolutePath('spiders'));
     var modules = [];
 
     var cb = function (action) {
         var co = require('co');
-        co(action).then(function(){ // suicidal-ending for the child-process callback
+        co(action(10)).then(function () { // suicidal-ending for the child-process callback
             var pid = process.pid;
             console.log('[%d] had been suicide.', pid);
             process.kill(pid);
-        }, function(err){
+        }, function (err) {
             console.log(err.stack);
         });
     };
     for (var i = 0, len = directories.length; i < len; i++) {
         var d = directories[i];
         var cityJS = path.join(d, 'city');
-        if(fs.existsSync(cityJS + '.js'))
+        if (fs.existsSync(cityJS + '.js'))
             modules.push({file: cityJS, method: 'fetchCities', callback: cb.toString()});
     }
 
-    new Parent(modules, '../modules/scheduler/child').start();
+    new Parent(modules, getAbsolutePath('modules/scheduler/child')).start();
 })();

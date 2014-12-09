@@ -4,6 +4,14 @@ spider
 
 a node spider
 
+Prerequisite
+======
+linux:
+    export spider_home=/xx/xxx/repo/spider
+
+windows:
+    set system environment variable `spider_home`
+    d:\repo\spider
 Formation of the configuration
 ======
 ```JSON
@@ -26,7 +34,6 @@ spider
 	--modules	:			custom modules
 	--spiders	:			business logic
 ```
-
 License
 ======
 The MIT License (MIT)

@@ -18,6 +18,7 @@ var bravo = require('bravo');
 var path = require('path');
 var moment = require('moment');
 var util = require('util');
+var getAbsolutePath = require('../../modules/other/pathUtils').getAbsolutePath;
 
 /*
  详情
@@ -47,7 +48,7 @@ function parse(fn) {
         });
 
         //collect page info
-        var jsonFile = path.join(process.cwd(), 'detail.json');
+        var jsonFile = getAbsolutePath('spiders/anjuke/detail.json');
         var house = bravo.Parse(jsonFile, html);
         house.zone = house.city + ' - ' + house.zone;
         house.source = 'anjuke';
