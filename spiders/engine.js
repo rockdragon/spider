@@ -1,4 +1,4 @@
-(function () {
+require('co')(function* () {
     var fs = require('fs');
     var path = require('path');
     var child_process = require('child_process');
@@ -6,6 +6,8 @@
     var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
     var pathUtils = require(getAbsolutePath('modules/other/pathUtils'));
     var Parent = require(getAbsolutePath('modules/scheduler/Parent'));
+    var model = require(getAbsolutePath('spiders/model'));
+    var onSuccess = require(getAbsolutePath('spiders/biz')).onSuccess;
 
     var directories = pathUtils.getSubDirectories(getAbsolutePath('spiders'));
     var modules = [];
@@ -27,5 +29,8 @@
             modules.push({file: cityJS, method: 'fetchCities', callback: cb.toString()});
     }
 
-    new Parent(modules, getAbsolutePath('modules/scheduler/child')).start();
-})();
+    yield model.synchronize();
+    onSuccess('synchronization successfully.');
+
+    new Parent([modules[2]], getAbsolutePath('modules/scheduler/child')).start();
+});

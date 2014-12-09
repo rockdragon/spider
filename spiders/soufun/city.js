@@ -18,6 +18,9 @@ var getURL = require('../biz').getURL;
 var onSuccess = require('../biz').onSuccess;
 var onError = require('../biz').onError;
 
+var resolve = require('url').resolve;
+var getRootURL = require('../../modules/other/pathUtils').getRootURL;
+
 module.exports.fetchCities = fetchCities;
 function* fetchCities (sleepSeconds) {
     var cities = HotCity['soufun'];
@@ -34,15 +37,9 @@ function* fetchCities (sleepSeconds) {
 
                 var listPage = yield new Houses(zone.href).getHouses();
                 for (var k = 0, len3 = listPage.houses.length; k < len3; k++) {
-                    var href = listPage.houses[k].href;
+                    var href = resolve(zone.href, listPage.houses[k].href);
                     var house = yield new Detail(href).getDetail();
 
-                    if (house.phoneURL) {
-                        var phoneJSON = yield getURL(house.phoneURL);
-                        house.phoneURL = extractImgSrc(phoneJSON);
-                        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
-                        delete house.phoneURL;
-                    }
                     if (house.housePics) {
                         //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
                         var pics = house.housePics.split(',');
@@ -53,10 +50,27 @@ function* fetchCities (sleepSeconds) {
                             sleep(sleepSeconds);
                         }
                     }
-                    console.log(house);
+                    if (house.mapUrl) {//没有经纬度的不收录
+                        var content = yield getURL(house.mapUrl);
+                        var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
+                        if (matched) {
+                            house.longitude = matched[1];
+                            house.latitude = matched[2];
+                        }
+                        delete house.mapUrl;
 
-                    yield model.synchronize();
-                    onSuccess('synchronization successfully.');
+                        if (house.pics) {//图片
+                            //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+                            house.housePics = [];
+                            for (var i = 0, len = house.pics.length; i < len; i++) {
+                                var blob = yield download2Buffer(house.pics[i], house.href);
+                                house.housePics.push({housePic: blob});
+                                sleep(1);
+                            }
+                            delete house.pics;
+                        }
+                    }
+                    console.log(house);
 
                     yield model.bulkCreate(house);
                     onSuccess('creation successfully.');

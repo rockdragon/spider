@@ -67,16 +67,17 @@ function listPage(opt) {
 }
 
 var configs = require('../modules/config/configUtils').getConfigs();
-if(configs && configs.DBConnection) {
+if (configs && configs.DBConnection) {
     var Sequelize = require('sequelize')
         , sequelize = new Sequelize(configs.DBConnection);
+    var cryptoUtils = require('../modules/other/cryptoUtils');
     /*
      Data Model
 
      * 没有经纬度的不收录
      */
     var HouseModel = sequelize.define('House', {
-        id: {type: Sequelize.BIGINT, primaryKey: true, unique: true, autoIncrement: true},
+        id: {type: Sequelize.STRING, primaryKey: true, unique: true},
         province: {type: Sequelize.STRING},
         city: {type: Sequelize.STRING},
         zone: {type: Sequelize.STRING},
@@ -161,13 +162,16 @@ if(configs && configs.DBConnection) {
     var _ = require('underscore');
 
     function bulkCreate(house) {
+        house.id = cryptoUtils.encrypt(house.source + '|' + house.sourceId);
         return HouseModel.create(house).then(function (houseFromDB) {
-            var pics = [];
-            for (var i = 0, len = house.housePics.length; i < len; i++) {
-                house.housePics[i].HouseId = houseFromDB.id;
-                pics.push(house.housePics[i]);
+            if (house.housePics) {
+                var pics = [];
+                for (var i = 0, len = house.housePics.length; i < len; i++) {
+                    house.housePics[i].HouseId = houseFromDB.id;
+                    pics.push(house.housePics[i]);
+                }
+                return HousePicModel.bulkCreate(pics);
             }
-            return HousePicModel.bulkCreate(pics);
         });
     }
 

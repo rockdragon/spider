@@ -56,9 +56,6 @@ function* fetchCities(sleepSeconds) {
                     }
                     console.log(house);
 
-                    yield model.synchronize();
-                    onSuccess('synchronization successfully.');
-
                     yield model.bulkCreate(house);
                     onSuccess('creation successfully.');
 

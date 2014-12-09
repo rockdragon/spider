@@ -72,25 +72,25 @@ function parse(fn) {
     };
 }
 
-co(function*() {
-    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36469193');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
-    var house = yield d.getDetail();
-    if (house.pics) {
-        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
-        house.housePics = [];
-        for (var i = 0, len = house.pics.length; i < len; i++) {
-            var blob = yield download2Buffer(house.pics[i], house.href);
-            house.housePics.push({housePic: blob});
-            sleep(1);
-        }
-        delete house.pics;
-    }
-    console.log(house);
-
-    yield model.synchronize();
-    onSuccess('synchronization successfully.');
-
-    yield model.bulkCreate(house);
-    onSuccess('creation successfully.');
-}).catch(onError);
+//co(function*() {
+//    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36469193');
+//    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
+//    var house = yield d.getDetail();
+//    if (house.pics) {
+//        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
+//        house.housePics = [];
+//        for (var i = 0, len = house.pics.length; i < len; i++) {
+//            var blob = yield download2Buffer(house.pics[i], house.href);
+//            house.housePics.push({housePic: blob});
+//            sleep(1);
+//        }
+//        delete house.pics;
+//    }
+//    console.log(house);
+//
+//    yield model.synchronize();
+//    onSuccess('synchronization successfully.');
+//
+//    yield model.bulkCreate(house);
+//    onSuccess('creation successfully.');
+//}).catch(onError);

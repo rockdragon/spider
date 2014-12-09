@@ -53,10 +53,17 @@ function* fetchCities (sleepSeconds) {
                             sleep(sleepSeconds);
                         }
                     }
-                    console.log(house);
 
-                    yield model.synchronize();
-                    onSuccess('synchronization successfully.');
+                    if (house.pics) {
+                        house.housePics = [];
+                        for (var i = 0, len = house.pics.length; i < len; i++) {
+                            var blob = yield download2Buffer(house.pics[i], house.href);
+                            house.housePics.push({housePic: blob});
+                            sleep(sleepSeconds);
+                        }
+                        delete house.pics;
+                    }
+                    console.log(house);
 
                     yield model.bulkCreate(house);
                     onSuccess('creation successfully.');
