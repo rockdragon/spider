@@ -12,6 +12,8 @@ var download2Buffer = require('../biz').download2Buffer;
 var sleep = require('../biz').sleep;
 var getURL = require('../biz').getURL;
 var ent = require('ent');
+var onSuccess = require('../biz').onSuccess;
+var onError = require('../biz').onError;
 var bravo = require('bravo');
 var path = require('path');
 var moment = require('moment');
@@ -70,9 +72,7 @@ function parse(fn) {
 }
 
 co(function*() {
-    var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35929206');
-    //var d = new Detail('http://bj.zu.anjuke.com/gfangyuan/35937439');
-    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/35997962');
+    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36469193');
     //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');
     var house = yield d.getDetail();
     if (house.pics) {
@@ -86,4 +86,10 @@ co(function*() {
         delete house.pics;
     }
     console.log(house);
-});
+
+    yield model.synchronize();
+    onSuccess('synchronization successfully.');
+
+    yield model.bulkCreate(house);
+    onSuccess('creation successfully.');
+}).catch(onError);

@@ -11,6 +11,8 @@ var extractRequestHref = require('../biz').extractRequestHref;
 var download2Buffer = require('../biz').download2Buffer;
 var sleep = require('../biz').sleep;
 var getURL = require('../biz').getURL;
+var onSuccess = require('../biz').onSuccess;
+var onError = require('../biz').onError;
 var ent = require('ent');
 var bravo = require('bravo');
 var path = require('path');
@@ -103,10 +105,3 @@ co(function*() {
     yield model.bulkCreate(house);
     onSuccess('creation successfully.');
 }).catch(onError);
-
-function onSuccess(msg) {
-    console.log(msg);
-}
-function onError(err) {
-    console.log(err.stack);
-}

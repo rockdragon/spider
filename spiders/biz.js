@@ -56,3 +56,12 @@ function extractRequestHref(href, path){
     }
     return href;
 }
+
+module.exports.onSuccess = onSuccess;
+function onSuccess(msg) {
+    console.log(msg);
+}
+module.exports.onError = onError;
+function onError(err) {
+    console.log(err.stack);
+}
