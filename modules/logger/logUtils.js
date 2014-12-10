@@ -2,7 +2,8 @@ var winston = require('winston');
 var path = require('path');
 var fs = require('fs');
 var pathUtils = require('../other/pathUtils');
-var logPath = path.join(process.cwd(), 'logs/');
+var getAbsolutePath = require('../other/pathUtils').getAbsolutePath;
+var logPath = getAbsolutePath('logs/');
 
 if(!fs.existsSync(logPath)){
     pathUtils.mkdirAbsoluteSync(logPath);

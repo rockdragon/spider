@@ -1,34 +1,25 @@
 var co = require('co');
-var BloomFilter = require('bloomfilter').BloomFilter;
-var key = 'spider_bloom';
-var cache = {};
+var bf = require('bloomfilter');
 
-function instance(){
-    if(!cache[key]) {
-        //console.log('bloom does not exist.');
-        var p = 0.0001;                               //误判率
-        var n = 1000000;                              //集合大小
-        var m = parseInt(2 * n * Math.log(1 / p));    //位数组大小
-        var k = parseInt(0.7 * (m / n));              //Hash函数个数
+module.exports = BloomFilter;
+function BloomFilter(p, n) {
+    this.p = p || 0.0001;                                       //误判率
+    this.n = n || 1000000;                                      //集合大小
+    this.m = parseInt(2 * this.n * Math.log(1 / this.p));       //位数组大小
+    this.k = parseInt(0.7 * (this.m / this.n));                 //Hash函数个数
 
-        cache[key] = new BloomFilter(m, k);
-    }
-    return cache[key];
+    this.bloomFilter = new bf.BloomFilter(this.m, this.k);
 }
 
-module.exports.exists = exists;
-module.exports.add = add;
-//module.exports.clearAll = clearAll;
+BloomFilter.prototype.exists = function (url) {
+    return this.bloomFilter.test(url);
+};
+BloomFilter.prototype.add = function (url) {
+    return this.bloomFilter.add(url);
+};
+BloomFilter.prototype.destroy = function () {
+    delete this.bloomFilter.buckets;
+    delete this;
+};
 
-function exists(url){
-    return instance().test(url);
-}
-
-function add(url){
-    return instance().add(url);
-}
-
-//function clearAll(){
-//
-//}
 
