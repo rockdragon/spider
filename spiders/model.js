@@ -146,8 +146,8 @@ if (configs && configs.DBConnection) {
         tableName: 'HousePic'
     });
 
-    HouseModel.hasMany(HousePicModel, {as: 'housePics'});
-    HousePicModel.belongsTo(HouseModel);
+    HouseModel.hasMany(HousePicModel, {as: 'HousePics'});
+    HousePicModel.belongsTo(HouseModel, {as: 'House'});
 
     /*
      * synchronize DB
@@ -179,12 +179,11 @@ if (configs && configs.DBConnection) {
      * find one
      */
     function findOne(opts) {
-        return HouseModel.findOne(opts).then(function (house) {
-            return HousePicModel.findAll({HouseId: house.id}).then(function (housePics) {
-                house.housePics = housePics;
-                return house;
-            });
-        });
+        opts.include = {
+            model: HousePicModel,
+            as: 'HousePics'
+        };
+        return HouseModel.findOne(opts);
     }
 
     module.exports.HouseModel = HouseModel;
