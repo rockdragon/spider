@@ -149,17 +149,6 @@ if (configs && configs.DBConnection) {
     HouseModel.hasMany(HousePicModel, {as: 'housePics'});
     HousePicModel.belongsTo(HouseModel);
 
-    //HouseModel.create({}).complete(function(err, source) {
-    //    HousePicModel.create({}).complete(function(err, target) {
-    //        // Set the association
-    //        source.setTarget(target).complete(function(err) {
-    //            // Get the association
-    //            source.getTarget().complete(function(err, _target) {
-    //            });
-    //        });
-    //    })
-    //});
-
     /*
      * synchronize DB
      * */
