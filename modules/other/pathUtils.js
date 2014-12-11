@@ -60,22 +60,43 @@ function getSubDirectories(dir) {
     var files = fs.readdirSync(dir);
     _.each(files, function (f) {
         var filePath = path.join(dir, f);
-        if(fs.statSync(filePath).isDirectory())
+        if (fs.statSync(filePath).isDirectory())
             res.push(filePath);
     });
     return res;
 }
 module.exports.getSubDirectories = getSubDirectories;
+/*
+ get all sub-directories name in
+ */
+function getSubDirNames(dir) {
+    var res = [];
+    var files = fs.readdirSync(dir);
+    _.each(files, function (f) {
+        var filePath = path.join(dir, f);
+        if (fs.statSync(filePath).isDirectory())
+            res.push(f);
+    });
+    return res;
+}
+module.exports.getSubDirNames = getSubDirNames;
 
-function getRootURL(url){
+function getRootURL(url) {
     var reg = new RegExp('http(s)?:\/\/[^\/]+/');
     var m = reg.exec(url);
     return m ? m[0] : null;
 }
 module.exports.getRootURL = getRootURL;
 
-function getAbsolutePath(suffix){
+function getAbsolutePath(suffix) {
     var root = process.env.spider_home || process.cwd();
     return path.join(root, suffix);
 }
 module.exports.getAbsolutePath = getAbsolutePath;
+
+function readFile(fileName) {
+    return function (fn) {
+        fs.readFile(fileName, {encoding: 'utf8', flag: 'r'}, fn);
+    }
+}
+module.exports.readFile = readFile;

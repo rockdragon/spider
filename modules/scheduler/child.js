@@ -1,6 +1,7 @@
-function Child(jsFile, method, callback) {
+function Child(jsFile, method, site, callback) {
     this.jsFile = jsFile;
     this.method = method;
+    this.site = site;
     this.callback = eval('(' + callback + ')');
     this.interval = 1000;
     this.livingSeconds = 10;
@@ -26,12 +27,13 @@ Child.prototype.work = function () {
     //beatLoop(this);
     var module = require(this.jsFile);
     var action = module[this.method];
-    this.callback(action);
+    console.log(this.site);
+    this.callback(action, this.site);
 };
 
-process.on('message', function(m){
-    if(m.category ==='init'){
-        var child = new Child(m.task.file, m.task.method, m.task.callback);
+process.on('message', function (m) {
+    if (m.category === 'init') {
+        var child = new Child(m.task.file, m.task.method, m.task.site, m.task.callback);
         child.work();
     }
 });

@@ -52,6 +52,7 @@ function parse(fn) {
         var house = bravo.Parse(jsonFile, html);
         house.source = 'soufun';
         house.publisher = '个人';
+        console.log('res', res);
         house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
         house.publishDate = moment(house.publishDate).toDate();
 

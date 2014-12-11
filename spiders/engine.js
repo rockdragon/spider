@@ -9,12 +9,12 @@ require('co')(function* () {
     var model = require(getAbsolutePath('spiders/model'));
     var onSuccess = require(getAbsolutePath('spiders/biz')).onSuccess;
 
-    var directories = pathUtils.getSubDirectories(getAbsolutePath('spiders'));
+    var dirNames = pathUtils.getSubDirNames(getAbsolutePath('spiders'));
     var modules = [];
 
-    var cb = function (action) {
+    var cb = function (action, site) {
         var co = require('co');
-        co(action(10)).then(function () { // suicidal-ending for the child-process callback
+        co(action(site)).then(function () { // suicidal-ending for the child-process callback
             var pid = process.pid;
             console.log('[%d] had been suicide.', pid);
             process.kill(pid);
@@ -22,15 +22,14 @@ require('co')(function* () {
             console.log(err.stack);
         });
     };
-    for (var i = 0, len = directories.length; i < len; i++) {
-        var d = directories[i];
-        var cityJS = path.join(d, 'city');
-        if (fs.existsSync(cityJS + '.js'))
-            modules.push({file: cityJS, method: 'fetchCities', callback: cb.toString()});
+    var crawlCitiesJS = getAbsolutePath('spiders/crawlCities');
+    for (var i = 0, len = dirNames.length; i < len; i++) {
+        var site = dirNames[i];
+        modules.push({file: crawlCitiesJS, method: 'fetchCities', site: site, callback: cb.toString()});
     }
 
     yield model.synchronize();
     onSuccess('synchronization successfully.');
 
-    new Parent(modules, getAbsolutePath('modules/scheduler/child')).start();
+    new Parent([modules[1]], getAbsolutePath('modules/scheduler/child')).start();
 });

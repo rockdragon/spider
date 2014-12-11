@@ -1,26 +1,35 @@
 var util = require('util');
 var co = require('co');
 var _ = require('underscore');
+var _s = require('underscore.string');
+var resolve = require('url').resolve;
 
-var model = require('../model');
-var HotCity = require('../hotCity');
-var HotZone = require('./hotZone');
-var Houses = require('./houses');
-var Detail = require('./Detail');
-var log = require('../biz').log;
+var model = require('./model');
+var log = require('./biz').log;
 
-var getRootURL = require('../../modules/other/pathUtils').getRootURL;
-var extractImgSrc = require('../biz').extractImgSrc;
-var extractRequestHref = require('../biz').extractRequestHref;
-var download2Buffer = require('../biz').download2Buffer;
-var sleep = require('../biz').sleep;
-var getURL = require('../biz').getURL;
-var onSuccess = require('../biz').onSuccess;
-var onError = require('../biz').onError;
+var getRootURL = require('../modules/other/pathUtils').getRootURL;
+var readFile = require('../modules/other/pathUtils').readFile;
+var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
+var extractImgSrc = require('./biz').extractImgSrc;
+var extractRequestHref = require('./biz').extractRequestHref;
+var download2Buffer = require('./biz').download2Buffer;
+var sleep = require('./biz').sleep;
+var getURL = require('./biz').getURL;
+var onSuccess = require('./biz').onSuccess;
+var onError = require('./biz').onError;
 
+/*
+ * @site 站点
+ * @sleepSeconds 休眠秒数
+ * */
 module.exports.fetchCities = fetchCities;
-function* fetchCities(sleepSeconds) {
-    var cities = HotCity['58'];
+function* fetchCities(site) {
+    var hotCities = JSON.parse(yield readFile(getAbsolutePath('spiders/hotCities.json')));
+    var cities = hotCities[site].cities;
+    var sleepSeconds = hotCities[site].sleepSeconds;
+    var HotZone = require(getAbsolutePath('spiders/' + site + '/hotZone'));
+    var Houses = require(getAbsolutePath('spiders/' + site + '/houses'));
+    var Detail = require(getAbsolutePath('spiders/' + site + '/detail'));
 
     for (var i = 0, len = cities.length; i < len; i++) {
         var city = cities[i];
@@ -36,6 +45,9 @@ function* fetchCities(sleepSeconds) {
 
                 for (var k = 0, len3 = listPage.houses.length; k < len3; k++) {
                     var href = listPage.houses[k].href;
+                    if(!_s.startsWith(href, 'http'))
+                        href = resolve(getRootURL(city), href);
+                    console.log(href);
                     var house = yield new Detail(href).getDetail();
 
                     if (house.phoneURL) {
