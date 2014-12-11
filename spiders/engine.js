@@ -31,5 +31,5 @@ require('co')(function* () {
     yield model.synchronize();
     onSuccess('synchronization successfully.');
 
-    new Parent([modules[1]], getAbsolutePath('modules/scheduler/child')).start();
+    new Parent([modules[2]], getAbsolutePath('modules/scheduler/child')).start();
 });

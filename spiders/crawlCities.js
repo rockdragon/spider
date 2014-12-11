@@ -47,25 +47,11 @@ function* fetchCities(site) {
                     var href = listPage.houses[k].href;
                     if(!_s.startsWith(href, 'http'))
                         href = resolve(getRootURL(city), href);
-                    console.log(href);
-                    var house = yield new Detail(href).getDetail();
+                    var detail = new Detail(href);
+                    var house = yield detail.getDetail();
 
-                    if (house.phoneURL) {
-                        var phoneJSON = yield getURL(house.phoneURL);
-                        house.phoneURL = extractImgSrc(phoneJSON);
-                        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
-                        delete house.phoneURL;
-                    }
-                    if (house.housePics) {
-                        //'http://xx.com/tiny/n_t009ef5c407ad080034589.jpg,http://xx.cn/p1/tiny/n_t009eadb5f17458003456c.jpg'
-                        var pics = house.housePics.split(',');
-                        house.housePics = [];
-                        for (var l = 0, len4 = pics.length; l < len4; l++) {
-                            var blob = yield download2Buffer(pics[l], house.href);
-                            house.housePics.push({housePic: blob});
-                            sleep(sleepSeconds);
-                        }
-                    }
+                    yield co(detail.moreDetail(house));
+
                     console.log(house);
 
                     yield model.bulkCreate(house);

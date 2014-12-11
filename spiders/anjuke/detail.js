@@ -72,6 +72,19 @@ function parse(fn) {
     };
 }
 
+Detail.prototype.moreDetail = moreDetail;
+function* moreDetail(house) {
+    if (house.pics) {
+        house.housePics = [];
+        for (var i = 0, len = house.pics.length; i < len; i++) {
+            var blob = yield download2Buffer(house.pics[i], house.href);
+            house.housePics.push({housePic: blob});
+            sleep(1);
+        }
+        delete house.pics;
+    }
+}
+
 //co(function*() {
 //    var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36469193');
 //    //var d = new Detail('http://cd.zu.anjuke.com/gfangyuan/36255669');

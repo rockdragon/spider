@@ -72,8 +72,28 @@ function parse(fn) {
             house.phoneURL = util.format('http://yuzufang.house.58.com/common/getinfophonebyauth?infoid=%s&cityId=%s',
                 house.sourceId, house.cityId);
         }
+
         fn(err, house);
     };
+}
+
+Detail.prototype.moreDetail = moreDetail;
+function* moreDetail(house) {
+    if (house.phoneURL) {
+        var phoneJSON = yield getURL(house.phoneURL);
+        house.phoneURL = extractImgSrc(phoneJSON);
+        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
+        delete house.phoneURL;
+    }
+    if (house.housePics) {
+        var pics = house.housePics.split(',');
+        house.housePics = [];
+        for (var i = 0, len = pics.length; i < len; i++) {
+            var blob = yield download2Buffer(pics[i], house.href);
+            house.housePics.push({housePic: blob});
+            sleep(2);
+        }
+    }
 }
 
 //co(function*() {

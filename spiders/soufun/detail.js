@@ -67,6 +67,28 @@ function parse(fn) {
     };
 }
 
+Detail.prototype.moreDetail = moreDetail;
+function* moreDetail(house) {
+    if (house.mapUrl) {//没有经纬度的不收录
+        var content = yield getURL(house.mapUrl);
+        var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
+        if (matched) {
+            house.longitude = matched[1];
+            house.latitude = matched[2];
+        }
+        delete house.mapUrl;
+        if (house.pics) {//图片
+            house.housePics = [];
+            for (var i = 0, len = house.pics.length; i < len; i++) {
+                var blob = yield download2Buffer(house.pics[i], house.href);
+                house.housePics.push({housePic: blob});
+                sleep(1);
+            }
+            delete house.pics;
+        }
+    }
+}
+
 //co(function*() {
 //    //var d = new Detail('http://zu.fang.com/chuzu/1_58826182_-1.htm');
 //    //var d = new Detail('http://zu.fang.com/chuzu/1_58826292_-1.htm');
