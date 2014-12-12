@@ -162,7 +162,7 @@ if (configs && configs.DBConnection) {
     var _ = require('underscore');
 
     function bulkCreate(house) {
-        house.id = cryptoUtils.encrypt(house.source + '|' + house.sourceId);
+        house.id = cryptoUtils.encrypt(configs.SECRET, house.source, house.sourceId);
         return HouseModel.create(house).then(function (houseFromDB) {
             if (house.housePics) {
                 var pics = [];
