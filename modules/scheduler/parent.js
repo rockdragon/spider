@@ -29,22 +29,21 @@ Parent.prototype.start = function () {
 
 Parent.prototype.stop = function (child) {
     console.log('[%d] : stopped.', child.pid);
-    var task = this.taskWorking.remove(child);
-    console.log(task);
-    if (task) {
-        process.kill(task.pid);
-    }
+    this.taskWorking.remove(child);
 };
 
 Parent.prototype.execute = function (task) {
     if (task) {
         var child = child_process.fork(this.child);
         this.taskWorking.push(child);
+        var parent = this;
         child.on('message', function (m) {
             if (m.category === 'heartbeat')
                 console.log('[%d] : [%s] ', child.pid, m.message);
             else if (m.category === 'result') {
                 console.log(m.message);
+            } else if (m.category === 'stop') {
+                parent.stop(child);
             }
         });
         child.send({category:'init', task:task});
