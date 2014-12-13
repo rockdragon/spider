@@ -18,6 +18,9 @@ var getURL = require('./biz').getURL;
 var onSuccess = require('./biz').onSuccess;
 var onError = require('./biz').onError;
 
+var BloomFilter = require('../modules/repeater/repeater'),
+    repeater = new BloomFilter();
+
 /*
  * @site 站点
  * @sleepSeconds 休眠秒数
@@ -36,38 +39,50 @@ function* fetchCities(site) {
         try {
             var zones = yield new HotZone(city).getHotZones();
             sleep(sleepSeconds);
-            //name=安贞出租, href=http://bj.58.com/anzhenqiao/chuzu/
             for (var j = 0, len2 = zones.length; j < len2; j++) {
                 var zone = zones[j];
-                //log(util.format('%s --------- BEGIN',zone.name));
-
                 var listPage = yield new Houses(zone.href).getHouses();
 
-                for (var k = 0, len3 = listPage.houses.length; k < len3; k++) {
-                    var href = listPage.houses[k].href;
-                    if(!_s.startsWith(href, 'http'))
-                        href = resolve(getRootURL(city), href);
-                    var detail = new Detail(href);
-                    var house = yield detail.getDetail();
+                yield co(fetchHouses(listPage, Detail, sleepSeconds, city));
 
-                    yield co(detail.moreDetail(house));
-
-                    console.log(house);
-
-                    yield model.bulkCreate(house);
-                    onSuccess('creation successfully.');
-
-                    sleep(sleepSeconds);
+                for (var l = 0, len4 = listPage.pages.length; l < len4; l++) {
+                    listPage = yield new Houses(listPage.pages[l]).getHouses();
+                    yield co(fetchHouses(listPage, Detail, sleepSeconds, city));
                 }
 
-                //log(util.format('%s --------- END',zone.name));
-                //log('\r\n');
                 sleep(sleepSeconds);
             }
         } catch (e) {
             log(util.format('%s: ---------ERROR', city));
             log(e.stack);
         }
+    }
+}
+
+function* fetchHouses(listPage, Detail, sleepSeconds, city){
+    for (var m = 0, len5 = listPage.houses.length; m < len5; m++) {
+        var href = listPage.houses[m].href;
+        if (!_s.startsWith(href, 'http'))
+            href = resolve(getRootURL(city), href);
+        yield co(fetchOneHouse(Detail, href, sleepSeconds));
+    }
+}
+
+function* fetchOneHouse(Detail, href, sleepSeconds) {
+    if (!repeater.exists(href)) {//防重
+        repeater.add(href);
+
+        var detail = new Detail(href);
+        var house = yield detail.getDetail();
+
+        yield co(detail.moreDetail(house));
+
+        console.log(house);
+
+        yield model.bulkCreate(house);
+        onSuccess('creation successfully.');
+
+        sleep(sleepSeconds);
     }
 }
 
