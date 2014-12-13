@@ -43,6 +43,7 @@ Parent.prototype.execute = function (task) {
             else if (m.category === 'result') {
                 console.log(m.message);
             } else if (m.category === 'stop') {
+                console.log('parent received stop message.');
                 parent.stop(child);
             }
         });
