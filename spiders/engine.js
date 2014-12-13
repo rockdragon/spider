@@ -5,7 +5,7 @@ require('co')(function* () {
     var _ = require('underscore');
     var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
     var pathUtils = require(getAbsolutePath('modules/other/pathUtils'));
-    var Parent = require(getAbsolutePath('modules/scheduler/Parent'));
+    var Parent = require(getAbsolutePath('modules/scheduler/parent'));
     var model = require(getAbsolutePath('spiders/model'));
     var onSuccess = require(getAbsolutePath('spiders/biz')).onSuccess;
 
