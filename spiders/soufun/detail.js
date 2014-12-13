@@ -19,6 +19,7 @@ var path = require('path');
 var moment = require('moment');
 var util = require('util');
 var getAbsolutePath = require('../../modules/other/pathUtils').getAbsolutePath;
+var log = require('../biz').log;
 
 /*
  详情
@@ -52,7 +53,12 @@ function parse(fn) {
         var house = bravo.Parse(jsonFile, html);
         house.source = 'soufun';
         house.publisher = '个人';
-        house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
+        try {
+            house.href = extractRequestHref(res.request.uri.href, res.request.uri.search);
+        } catch(e){
+            log('---------------- ERROR: ', url);
+            log(e.stack);
+        }
         house.publishDate = moment(house.publishDate).toDate();
 
         house.pics = [];//bg_nopic.jpg / bg_default.jpg

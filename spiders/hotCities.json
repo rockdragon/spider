@@ -15,7 +15,7 @@
     ]
   },
   "anjuke": {
-    "sleepSeconds": 6,
+    "sleepSeconds": 10,
     "cities": [
       "http://bj.zu.anjuke.com/fangyuan/l2/",
       "http://sh.zu.anjuke.com/fangyuan/l2/",
@@ -28,7 +28,7 @@
     ]
   },
   "soufun": {
-    "sleepSeconds": 8,
+    "sleepSeconds": 10,
     "cities": [
       "http://zu.fang.com/house/list/a21/",
       "http://zu.sh.fang.com/house/list/a21/",

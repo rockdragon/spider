@@ -62,8 +62,10 @@ function* fetchCities(site) {
 function* fetchHouses(listPage, Detail, sleepSeconds, city){
     for (var m = 0, len5 = listPage.houses.length; m < len5; m++) {
         var href = listPage.houses[m].href;
-        if (!_s.startsWith(href, 'http'))
+        if (!_s.startsWith(href, 'http')) {
+            log('resolve: ', city, href);
             href = resolve(getRootURL(city), href);
+        }
         yield co(fetchOneHouse(Detail, href, sleepSeconds));
     }
 }
@@ -72,17 +74,22 @@ function* fetchOneHouse(Detail, href, sleepSeconds) {
     if (!repeater.exists(href)) {//防重
         repeater.add(href);
 
-        var detail = new Detail(href);
-        var house = yield detail.getDetail();
+        if(href.trim()) {
 
-        yield co(detail.moreDetail(house));
+            var detail = new Detail(href);
+            var house = yield detail.getDetail();
 
-        console.log(house);
+            yield co(detail.moreDetail(house));
 
-        yield model.bulkCreate(house);
-        onSuccess('creation successfully.');
+            console.log(house);
 
-        sleep(sleepSeconds);
+            yield model.bulkCreate(house);
+            onSuccess('creation successfully.');
+
+            sleep(sleepSeconds);
+        } else {
+            log('NULL href');
+        }
     }
 }
 
