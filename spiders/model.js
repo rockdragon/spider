@@ -163,22 +163,24 @@ if (configs && configs.DBConnection) {
 
     function bulkCreate(house) {
         house.id = cryptoUtils.encrypt(configs.SECRET, house.source, house.sourceId);
-        if(!exists(house.id)) {
-            return HouseModel.create(house).then(function (houseFromDB) {
-                if (house.housePics) {
-                    var pics = [];
-                    for (var i = 0, len = house.housePics.length; i < len; i++) {
-                        house.housePics[i].HouseId = houseFromDB.id;
-                        pics.push(house.housePics[i]);
-                    }
-                    return HousePicModel.bulkCreate(pics);
-                } else
-                    return Promise.resolve(true);
-            });
-        } else {
-            console.log('house %s already had been exists.', house.title);
-            return Promise.resolve(true);
-        }
+        return HouseModel.count({where: ["id = ?", house.id]}).then(function (c) {
+            if (c === 0) {
+                return HouseModel.create(house).then(function (houseFromDB) {
+                    if (house.housePics) {
+                        var pics = [];
+                        for (var i = 0, len = house.housePics.length; i < len; i++) {
+                            house.housePics[i].HouseId = houseFromDB.id;
+                            pics.push(house.housePics[i]);
+                        }
+                        return HousePicModel.bulkCreate(pics);
+                    } else
+                        return Promise.resolve(true);
+                });
+            } else {
+                console.log('house %s already had been exists.', house.title);
+                return Promise.resolve(true);
+            }
+        });
     }
 
     /*
@@ -192,19 +194,12 @@ if (configs && configs.DBConnection) {
         return HouseModel.findOne(opts);
     }
 
-    function exists(houseId){
-        return HouseModel.count({where:["id = ?", houseId]}).then(function(c){
-            return c > 0;
-        });
-    }
-
     module.exports.HouseModel = HouseModel;
     module.exports.HousePicModel = HousePicModel;
     module.exports.sequelize = sequelize;
     module.exports.synchronize = synchronize;
     module.exports.bulkCreate = bulkCreate;
     module.exports.findOne = findOne;
-    module.exports.exists = exists;
 }
 
 module.exports.House = House;
