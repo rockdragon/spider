@@ -16,7 +16,6 @@ require('co')(function* () {
         var co = require('co');
         co(action(site)).then(function () { // suicidal-ending for the child-process callback
             var pid = process.pid;
-            process.send({category: 'stop'});
             console.log('[%d] had been suicide.', pid);
             process.kill(pid);
         }, function (err) {

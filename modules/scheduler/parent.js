@@ -19,35 +19,34 @@ function Parent(args, childPath) {
 }
 
 Parent.prototype.start = function () {
-    while (this.taskWaiting.length > 0) {
+    this.next();
+};
+
+Parent.prototype.next = function () {
+    //console.log('waiting', this.taskWaiting, 'working', this.taskWorking);
+    if (this.taskWaiting.length > 0) {
         if (this.taskWorking.length < cores) {
-            var task = this.taskWaiting.splice(0, 1)[0];
-            this.execute(task);
+            for (var i = 0, len = cores - this.taskWorking.length; i < len; i++) {
+                var task = this.taskWaiting.splice(0, 1)[0];
+                this.execute(task);
+            }
         }
     }
 };
 
-Parent.prototype.stop = function (child) {
-    console.log('[%d] : stopped.', child.pid);
-    this.taskWorking.remove(child);
-};
-
 Parent.prototype.execute = function (task) {
     if (task) {
+        var parent = this;
         var child = child_process.fork(this.child);
         this.taskWorking.push(child);
-        var parent = this;
         child.on('message', function (m) {
-            if (m.category === 'heartbeat')
-                console.log('[%d] : [%s] ', child.pid, m.message);
-            else if (m.category === 'result') {
-                console.log(m.message);
-            } else if (m.category === 'stop') {
-                console.log('parent received stop message.');
-                parent.stop(child);
-            }
+            console.log(m);
         });
-        child.send({category:'init', task:task});
+        child.on('exit', function () {
+            parent.taskWorking.remove(child);
+            parent.next();
+        });
+        child.send({category: 'init', task: task});
     }
 };
 
