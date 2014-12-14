@@ -77,10 +77,12 @@ Detail.prototype.moreDetail = moreDetail;
 function* moreDetail(house) {
     if (house.mapUrl) {//没有经纬度的不收录
         var content = yield getURL(house.mapUrl);
-        var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
-        if (matched) {
-            house.longitude = matched[1];
-            house.latitude = matched[2];
+        if(content) {
+            var matched = new RegExp('px:"([^"]+)",py:"([^"]+)"').exec(content);
+            if (matched) {
+                house.longitude = matched[1];
+                house.latitude = matched[2];
+            }
         }
         delete house.mapUrl;
         if (house.pics) {//图片

@@ -87,8 +87,10 @@ Detail.prototype.moreDetail = moreDetail;
 function* moreDetail(house) {
     if (house.phoneURL) {
         var phoneJSON = yield getURL(house.phoneURL);
-        house.phoneURL = extractImgSrc(phoneJSON);
-        house.phonePic = yield download2Buffer(house.phoneURL, house.href);
+        if(phoneJSON) {
+            house.phoneURL = extractImgSrc(phoneJSON);
+            house.phonePic = yield download2Buffer(house.phoneURL, house.href);
+        }
         delete house.phoneURL;
     }
     if (house.housePics) {

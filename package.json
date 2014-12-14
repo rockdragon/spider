@@ -30,7 +30,7 @@
     "ent": "*",
     "moment": "*",
     "bloomfilter": "*",
-    "request-gb": "~0.1.2",
+    "request-gb": "~0.1.3",
     "bravo": "~0.1.5"
   },
   "engines": {
