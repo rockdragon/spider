@@ -81,10 +81,12 @@ function* fetchOneHouse(Detail, href, sleepSeconds) {
 
             yield co(detail.moreDetail(house));
 
-            console.log(house);
+            if(house.longitude && house.latitude) {
+                console.log(house);
 
-            yield model.bulkCreate(house);
-            onSuccess('creation successfully.');
+                yield model.bulkCreate(house);
+                onSuccess('creation successful.');
+            }
 
             sleep(sleepSeconds);
         } else {

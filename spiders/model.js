@@ -95,8 +95,8 @@ if (configs && configs.DBConnection) {
         source: {type: Sequelize.STRING},
         publishDate: {type: Sequelize.DATE, allowNull: false},
         description: {type: Sequelize.TEXT},
-        longitude: {type: Sequelize.DECIMAL},
-        latitude: {type: Sequelize.DECIMAL},
+        longitude: {type: Sequelize.DECIMAL(18, 15)},
+        latitude: {type: Sequelize.DECIMAL(18, 15)},
         cityId: {type: Sequelize.INTEGER}
     }, {
         // add the timestamp attributes (updatedAt, createdAt)
