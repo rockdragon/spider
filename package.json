@@ -1,8 +1,8 @@
 {
   "name": "spider",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
-    "start": "node --harmony ./bin/start.js",
+    "start": "node --harmony ./spiders/engine.js",
     "test": "mocha --recursive --timeout 500000 -R spec --require should --harmony test/ --bail",
     "test-cov": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha  -- -u exports --require should  --timeout 500000 --recursive test/ --bail",
     "test-travis": "node --harmony node_modules/istanbul-harmony/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -u exports --require should  --timeout 500000  --recursive test/ --bail"
@@ -31,7 +31,10 @@
     "moment": "*",
     "bloomfilter": "*",
     "request-gb": "~0.1.3",
-    "bravo": "~0.1.5"
+    "bravo": "~0.1.5",
+    "koa": "^0.14.0",
+    "koa-mount": "*",
+    "koa-ejs": "*"
   },
   "engines": {
     "node": ">=0.11.14"
