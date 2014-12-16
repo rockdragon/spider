@@ -71,6 +71,8 @@ if (configs && configs.DBConnection) {
     var Sequelize = require('sequelize')
         , sequelize = new Sequelize(configs.DBConnection);
     var cryptoUtils = require('../modules/other/cryptoUtils');
+    var _ = require('underscore');
+    var util = require('util');
     /*
      Data Model
 
@@ -159,8 +161,6 @@ if (configs && configs.DBConnection) {
     /*
      * bulk insert
      */
-    var _ = require('underscore');
-
     function bulkCreate(house) {
         house.id = cryptoUtils.encrypt(configs.SECRET, house.source, house.sourceId);
         return HouseModel.count({where: ["id = ?", house.id]}).then(function (c) {
@@ -194,7 +194,20 @@ if (configs && configs.DBConnection) {
         return HouseModel.findOne(opts);
     }
 
+    /*
+    * query a bundle of count, or single
+    * */
     function countBySource(source) {
+        if (_.isArray(source)) {
+            var query = [];
+            for (var i = 0, len = source.length; i < len; i++) {
+                var q = util.format('SELECT count(1) ct FROM spider.house where source = "%s"', source[i]);
+                query.push(q);
+            }
+            return sequelize.query(query.join(' UNION ALL ')).then(function(tb){
+                return tb;
+            });
+        }
         return sequelize.query('SELECT count(1) ct FROM spider.house where source = :source', null,
             {raw: true}, {source: source}).then(function (tb) {
                 return tb[0].ct;
