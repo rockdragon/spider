@@ -2,7 +2,6 @@ var koa = require('koa');
 var mount = require('koa-mount');
 var render = require('koa-ejs');
 var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
-var index = require(getAbsolutePath('web/routes/index'));
 
 //settings
 var app = koa();
@@ -15,7 +14,10 @@ render(app, {
 });
 
 //routes
+var index = require(getAbsolutePath('web/routes/index'));
+var data = require(getAbsolutePath('web/routes/data'));
 app.use(mount('/', index));
+app.use(mount('/data', data));
 
 //listen
 app.listen(3000);

@@ -194,12 +194,20 @@ if (configs && configs.DBConnection) {
         return HouseModel.findOne(opts);
     }
 
+    function countBySource(source) {
+        return sequelize.query('SELECT count(1) ct FROM spider.house where source = :source', null,
+            {raw: true}, {source: source}).then(function (tb) {
+                return tb[0].ct;
+            });
+    }
+
     module.exports.HouseModel = HouseModel;
     module.exports.HousePicModel = HousePicModel;
     module.exports.sequelize = sequelize;
     module.exports.synchronize = synchronize;
     module.exports.bulkCreate = bulkCreate;
     module.exports.findOne = findOne;
+    module.exports.countBySource = countBySource;
 }
 
 module.exports.House = House;
