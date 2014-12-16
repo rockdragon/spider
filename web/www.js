@@ -6,7 +6,9 @@ var getAbsolutePath = require('../modules/other/pathUtils').getAbsolutePath;
 
 //settings
 var app = koa();
-app.use(serve(getAbsolutePath('bower_components')));
+app.use(serve(getAbsolutePath('bower_components'), {
+    maxAge: 1000 * 86400 * 30
+}));
 render(app, {
     root: getAbsolutePath('web/views'),
     layout: false,
