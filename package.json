@@ -34,7 +34,8 @@
     "bravo": "~0.1.5",
     "koa": "^0.14.0",
     "koa-mount": "*",
-    "koa-ejs": "*"
+    "koa-ejs": "*",
+    "koa-static": "*"
   },
   "engines": {
     "node": ">=0.11.14"
