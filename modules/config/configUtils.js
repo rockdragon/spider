@@ -7,7 +7,7 @@ var cache = {};
 function getConfigs() {
     if (!cache[cfgFileName]) {
         if (!process.env.cloudDriveConfig) {
-            process.env.cllsoudDriveConfig = path.join(process.env.spider_home, cfgFileName);
+            process.env.cloudDriveConfig = path.join(process.env.spider_home, cfgFileName);
         }
         if (fs.existsSync(process.env.cloudDriveConfig)) {
             var contents = fs.readFileSync(process.env.cloudDriveConfig, {encoding: 'utf-8'});

@@ -30,21 +30,21 @@
   "soufun": {
     "sleepSeconds": 10,
     "cities": [
-      "http://zu.fang.com/house/list/a21/",
-      "http://zu.sh.fang.com/house/list/a21/",
-      "http://zu.gz.fang.com/house/list/a21/",
-      "http://zu.sz.fang.com/house/list/a21/",
-      "http://zu.tj.fang.com/house/list/a21/",
-      "http://zu.suzhou.fang.com/house/list/a21/",
-      "http://zu.hz.fang.com/house/list/a21/",
-      "http://zu.cd.fang.com/house/list/a21/",
-      "http://zu.cq.fang.com/house/list/a21/",
-      "http://zu.nanjing.fang.com/house/list/a21/",
-      "http://zu.wuhan.fang.com/house/list/a21/",
-      "http://zu.dl.fang.com/house/list/a21/",
-      "http://zu.qd.fang.com/house/list/a21/",
-      "http://zu.xian.fang.com/house/list/a21/",
-      "http://zu.cs.fang.com/house/list/a21/"
+      "http://zu.fang.com/house/a21/",
+      "http://zu.sh.fang.com/house/a21/",
+      "http://zu.gz.fang.com/house/a21/",
+      "http://zu.sz.fang.com/house/a21/",
+      "http://zu.tj.fang.com/house/a21/",
+      "http://zu.suzhou.fang.com/house/a21/",
+      "http://zu.hz.fang.com/house/a21/",
+      "http://zu.cd.fang.com/house/a21/",
+      "http://zu.cq.fang.com/house/a21/",
+      "http://zu.nanjing.fang.com/house/a21/",
+      "http://zu.wuhan.fang.com/house/a21/",
+      "http://zu.dl.fang.com/house/a21/",
+      "http://zu.qd.fang.com/house/a21/",
+      "http://zu.xian.fang.com/house/a21/",
+      "http://zu.cs.fang.com/house/a21/"
     ]
   }
 }

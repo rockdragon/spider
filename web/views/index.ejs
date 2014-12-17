@@ -1,6 +1,6 @@
 <% include common/header %>
 <!-- Content Header (Page header) -->
-<aside class="right-side" ng-app="spiderApp">
+<aside class="right-side" ng-app="statisticApp">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -9,12 +9,12 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Blank page</li>
+            <li class="active">Statistic</li>
         </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content" ng-controller="spiderController">
+    <section class="content" ng-controller="statisticController as statCtrl">
         <h2 class="page-header">Houses count</h2>
         <div class="row">
             <div class="col-md-6">
@@ -28,7 +28,7 @@
                         <div class="tab-pane active" id="soufun">
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>
+                                    <h3 ng-bind="statCtrl.data.count_soufun">
                                         0
                                     </h3>
                                     <p>
@@ -57,7 +57,7 @@
                         <div class="tab-pane active" id="58">
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>
+                                    <h3 ng-bind="statCtrl.data.count_58">
                                         0
                                     </h3>
                                     <p>
@@ -88,7 +88,7 @@
                         <div class="tab-pane active" id="anjuke">
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>
+                                    <h3 ng-bind="statCtrl.data.count_anjuke">
                                         0
                                     </h3>
                                     <p>
@@ -110,3 +110,4 @@
     </section><!-- /.content -->
 </aside><!-- /.right-side -->
 <% include common/footer %>
+<script src="/adminlte/js/statistic.js"></script>
