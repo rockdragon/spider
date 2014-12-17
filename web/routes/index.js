@@ -1,9 +1,7 @@
-var koa = require('koa');
-var render = require('koa-ejs');
+var Router = require('koa-router'),
+    router = new Router();
 
-var route = koa();
-
-route.use(function *() {
+router.get('/', function *() {
     yield this.render('index', {title: 'index'});
 });
-module.exports = route;
+module.exports = router;
