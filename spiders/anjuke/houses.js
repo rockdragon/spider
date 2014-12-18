@@ -35,16 +35,23 @@ function parse(fn) {
         var listPage = new model.listPage({url: url, houses: [], pages: []});
         _.each($('div.multi-page a'), function(a){
             var pageUrl = resolve(url, $(a).attr('href'));
-            listPage.pages.push(pageUrl);
+            if(pageUrl && !_.contains(listPage.pages, pageUrl)) {
+                listPage.pages.push(pageUrl);
+            }
         });
         $('div.main_content dl.dl_list_house').each(function () {
-            var house = new model.House({city: city});
             var $elements = $(this).children();
-
-            var $href = $($elements[1]).find('h3 a');
-            house.href = $href.attr('href');
-
-            listPage.houses.push(house);
+            if($elements[1]) {
+                var $href = $($elements[1]).find('h3 a');
+                if ($href) {
+                    var href = $href.attr('href');
+                    if(!_.contains(listPage.houses, href)) {
+                        var house = new model.House({city: city});
+                        house.href = href;
+                        listPage.houses.push(house);
+                    }
+                }
+            }
         });
         fn(err, listPage);
     };

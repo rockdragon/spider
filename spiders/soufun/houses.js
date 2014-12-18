@@ -43,19 +43,28 @@ function parse(fn) {
                 var pageHref = $(ele).attr('href');
                 if (pageHref) {
                     var pageUrl = resolve(url, pageHref);
-                    listPage.pages.push(pageUrl);
+                    if(pageUrl && !_.contains(listPage.pages, pageUrl)) {
+                        listPage.pages.push(pageUrl);
+                    }
                 }
             }
         });
         $('div.houseList dl.list').each(function () {
-            var house = new model.House({province: province, city: city});
-
             var $elements = $(this).children();
 
-            var $href = $($elements[1]).find('p.title a');
-            house.href = $href.attr('href');
-
-            listPage.houses.push(house);
+            if($elements[1]) {
+                var $href = $($elements[1]).find('p.title a');
+                if ($href) {
+                    var href = $href.attr('href');
+                    if(!_.contains(listPage.houses, href)) {
+                        var house = new model.House({province: province, city: city});
+                        if (!_s.startsWith(href, 'http'))
+                            href = resolve(url, href);
+                        house.href = href;
+                        listPage.houses.push(house);
+                    }
+                }
+            }
         });
         fn(err, listPage);
     }

@@ -11,13 +11,13 @@ var getRootURL = require('../../modules/other/pathUtils').getRootURL;
  列表
  * */
 module.exports = Houses;
-function Houses(url){
+function Houses(url) {
     this.url = url;
 }
 /*
  crawl houses list
-* */
-Houses.prototype.getHouses = function() {
+ * */
+Houses.prototype.getHouses = function () {
     var boundParse = parse.bind(this);
     return crawlPage(this.url, boundParse);
 };
@@ -34,16 +34,25 @@ function parse(fn) {
         });
         //collect page info
         var listPage = new model.listPage({url: url, houses: [], pages: []});
-        _.each($('div.pager a'), function(a){
+        _.each($('div.pager a'), function (a) {
             var pageUrl = resolve(url, $(a).attr('href'));
-            listPage.pages.push(pageUrl);
+            if(pageUrl && !_.contains(listPage.pages, pageUrl)) {
+                listPage.pages.push(pageUrl);
+            }
         });
         $('table.tbimg tr').each(function () {
-            var house = new model.House();
             var $elements = $(this).children();
-            var href = $($elements[1]).find('h1 a');
-            house.href = $(href).attr('href');
-            listPage.houses.push(house);
+            if ($elements[1]) {
+                var $href = $($elements[1]).find('h1 a');
+                if ($href) {
+                    var href = $href.attr('href');
+                    if(!_.contains(listPage.houses, href)) {
+                        var house = new model.House();
+                        house.href = href;
+                        listPage.houses.push(house);
+                    }
+                }
+            }
         });
         fn(err, listPage);
     };
