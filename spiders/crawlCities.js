@@ -48,6 +48,8 @@ function* fetchCities(site) {
                 for (var l = 0, len4 = listPage.pages.length; l < len4; l++) {
                     listPage = yield new Houses(listPage.pages[l]).getHouses();
                     yield co(fetchHouses(listPage, Detail, sleepSeconds, city));
+
+                    sleep(sleepSeconds);
                 }
 
                 sleep(sleepSeconds);
