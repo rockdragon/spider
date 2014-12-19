@@ -4,6 +4,14 @@
 var config = require('../config/configUtils').getConfigs();
 var request = require('request-gb');
 
+module.exports.crawlWithOpts = function (method, url, opts) {
+    return function (fn) {
+        var req = method === 'get' ? request.get : request.post;
+        opts.gzip = opts.gzip || true;
+        req(url, opts, fn);
+    };
+};
+
 module.exports.crawl = function (method, url) {
     return function (fn) {
         var req = method === 'get' ? request.get : request.post;
