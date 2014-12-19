@@ -31,12 +31,7 @@
     "moment": "*",
     "bloomfilter": "*",
     "request-gb": "~0.1.3",
-    "bravo": "~0.1.5",
-    "koa": "^0.14.0",
-    "koa-mount": "*",
-    "koa-ejs": "*",
-    "koa-static": "*",
-    "koa-router": "*"
+    "bravo": "~0.1.5"
   },
   "engines": {
     "node": ">=0.11.14"
