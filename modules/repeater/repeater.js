@@ -18,8 +18,7 @@ BloomFilter.prototype.add = function (url) {
     return this.bloomFilter.add(url);
 };
 BloomFilter.prototype.destroy = function () {
-    delete this.bloomFilter.buckets;
-    delete this;
+    this.bloomFilter.buckets = [];
 };
 
 
